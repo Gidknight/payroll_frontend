@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-size: 14px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.vert-head {
+  vertical-align: middle;
+}
+
+.horizon-body {
+  text-align: left;
+}
+
+.my-gradient {
+  @apply bg-gradient-to-r from-primary via-purple-500 to-pink-500;
+}
+
+.wrapper {
+  @apply w-full h-full px-1 md:px-10 xl:px-20 pt-24 pb-36 md:pt-5 flex flex-col gap-5 items-start justify-start bg-neutral;
+}
+
+.wrapper-2 {
+  @apply overflow-x-hidden w-full h-full px-5 lg:px-20 py-20 md:py-5 flex flex-col md:flex-row gap-0 lg:gap-5 items-center md:items-start justify-start md:justify-between bg-neutral;
+}
+.header-text {
+  @apply text-lg md:text-2xl font-bold text-gray2 text-left capitalize;
+}
+.header-danger {
+  @apply text-lg md:text-2xl font-bold text-red-700 text-left uppercase;
+}
+.sub-header-text {
+  @apply text-base font-semibold text-center capitalize;
+}
+.holder-active {
+  @apply w-full bg-white p-2 shadow-lg border-t-4 border-live;
+}
+.holder-not-active {
+  @apply w-full bg-red-50 p-2 shadow-lg border-t-4 border-error;
+}
+.holder-null {
+  @apply w-full bg-white p-2 shadow-lg border-t-4 border-secondary;
+}
+.side-by-side {
+  @apply flex flex-row items-center justify-start gap-2;
+}
+
+.header-icon {
+  @apply text-[30px];
+}
+
+.my-text-gradient {
+  @apply bg-gradient-to-r from-[#07FFFC] via-pink-500 to-pink-500 inline-block text-transparent bg-clip-text;
+}
+
+.animated-btn {
+  @apply my-gradient background-animate capitalize px-6 py-2.5 rounded-md text-lg font-semibold hover:scale-105 transition-all duration-300;
+}
+
+.edit-btn {
+  @apply flex flex-row items-center justify-center gap-2 capitalize border border-gray-400 hover:text-live font-semibold hover:border-live hover:shadow-md py-1 px-2 rounded-xl transition-all duration-300;
+}
+
+.report-th {
+  @apply border border-gray-300 px-4 py-2;
+}
+
+.report-td {
+  @apply border border-gray-300 px-4 py-2;
+}
+
+.background-animate {
+  background-size: 400%;
+
+  -webkit-animation: AnimationName 3s ease infinite;
+  -moz-animation: AnimationName 3s ease infinite;
+  animation: AnimationName 3s ease infinite;
+}
+
+@keyframes AnimationName {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* @media print {
+  @page {
+    size: 50mm 150mm;
+  }
+} */
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+}
