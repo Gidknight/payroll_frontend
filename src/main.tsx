@@ -20,31 +20,25 @@ import StaffDetailsPage from "./pages/StaffDetailsPage";
 import StaffEditJobDetailsPage from "./pages/StaffEditJobDetailsPage";
 import StaffEditAccountDetailsPage from "./pages/StaffEditAccountDetailsPage";
 import StaffEditBiodataPage from "./pages/StaffEditBiodataPage";
-// import SalesHistoryPage from "./pages/SalesHistoryPage";
-// import SalesDetailPage from "./pages/SalesDetailPage";
-// import CategoriesPage from "./pages/CategoriesPage";
-// import CategoryDetailsPage from "./pages/CategoryDetailsPage";
-// import SuppliersPage from "./pages/SuppliersPage";
-// import SupplierDetailsPage from "./pages/SupplierDetailsPage";
-// import ProductsPage from "./pages/ProductsPage";
-// import ProductDetailsPage from "./pages/ProductDetailsPage";
-// import NewProductPage from "./pages/NewProductPage";
-// import CustomersPage from "./pages/CustomersPage";
-// import NewCustomerPage from "./pages/NewCustomerPage";
-// import CustomerDetailsPage from "./pages/CustomerDetailsPage";
-// import CreditorsPage from "./pages/CreditorsPage";
-// import SettingsPage from "./pages/SettingsPage";
-// import AdministrationPage from "./pages/AdministrationPage";
-// import AdminUserDetailsPage from "./pages/AdminUserDetailsPage";
-// import NewUserPage from "./pages/NewUserPage";
-// import AnalysisPage from "./pages/AnalysisPage";
-// import ReportInventoryPage from "./pages/ReportInventoryPage";
-// import ReportCreditsPage from "./pages/ReportCreditsPage";
-// import ReportHistoryLogPage from "./pages/ReportHistoryLogPage";
-// import ReportPaymentsPage from "./pages/ReportPaymentsPage";
-// import ReportSalesPage from "./pages/ReportSalesPage";
-// import ReportStaffSalesHistoryPage from "./pages/ReportStaffSalesHistoryPage";
-// import OnboardingPage from "./OnboardingPage";
+import SalaryConfigPage from "./pages/SalaryConfigPage";
+import MyProfilePage from "./pages/MyProfilePage";
+import AdministrationPage from "./pages/AdministarionPage";
+import PayslipSendPage from "./pages/PayslipSendPage";
+import PayslipStatsPage from "./pages/PayslipStatsPage";
+import ReportMasterPage from "./pages/reports/ReportMasterPage";
+import ReportPayslipPage from "./pages/reports/ReportPayslipPage";
+import ReportAllowancePage from "./pages/reports/ReportAllowancePage";
+import ReportDeductionPage from "./pages/reports/ReportDeductionPage";
+import ReportCheckListPage from "./pages/reports/ReportChecksListPage";
+import ReportNorminalRollPage from "./pages/reports/ReportNorminalRollPage";
+import ReportBankSchedulePage from "./pages/reports/ReportBankSchedulePage";
+import ReportBankStatementPage from "./pages/reports/ReportBankStatementPage";
+import ReportDeductionEpayPage from "./pages/reports/ReportDeductionEpayPage";
+import ReportJournalPage from "./pages/reports/ReportJournalPage";
+import ReportStatusPage from "./pages/reports/ReportStatusPage";
+import ReportConsolidationPage from "./pages/reports/ReportConsolidationPage";
+import ReportCharmsPage from "./pages/reports/ReportCharmsPage";
+import ReportVariationPage from "./pages/reports/ReportVariationPage";
 
 const router = createBrowserRouter([
   {
@@ -111,78 +105,82 @@ const router = createBrowserRouter([
     path: "/configuration/bank-names",
     element: <ConfigBankNamesPage />,
   },
-  // {
-  //   path: "/maintenance/product/add-new",
-  //   element: <NewProductPage />,
-  // },
-  // {
-  //   path: "/maintenance/product/:id",
-  //   element: <ProductDetailsPage />,
-  // },
-  // {
-  //   path: "/maintenance/customer",
-  //   element: <CustomersPage />,
-  // },
-  // {
-  //   path: "/maintenance/customer/add-new",
-  //   element: <NewCustomerPage />,
-  // },
-  // {
-  //   path: "/maintenance/customer/:id",
-  //   element: <CustomerDetailsPage />,
-  // },
-  // {
-  //   path: "/maintenance/creditor",
-  //   element: <CreditorsPage />,
-  // },
-  // {
-  //   path: "/stock-in",
-  //   element: <Stockin />,
-  // },
-  // {
-  //   path: "/report/inventory",
-  //   element: <ReportInventoryPage />,
-  // },
-  // {
-  //   path: "/report/credits",
-  //   element: <ReportCreditsPage />,
-  // },
-  // {
-  //   path: "/report/history-log",
-  //   element: <ReportHistoryLogPage />,
-  // },
-  // {
-  //   path: "/report/payment",
-  //   element: <ReportPaymentsPage />,
-  // },
-  // {
-  //   path: "/report/sales",
-  //   element: <ReportSalesPage />,
-  // },
-  // {
-  //   path: "/report/staff-sales-history",
-  //   element: <ReportStaffSalesHistoryPage />,
-  // },
-  // {
-  //   path: "/analysis",
-  //   element: <AnalysisPage />,
-  // },
-  // {
-  //   path: "/settings",
-  //   element: <SettingsPage />,
-  // },
-  // {
-  //   path: "/administration",
-  //   element: <AdministrationPage />,
-  // },
-  // {
-  //   path: "/administration/user/:id",
-  //   element: <AdminUserDetailsPage />,
-  // },
-  // {
-  //   path: "/administration/add-user",
-  //   element: <NewUserPage />,
-  // },
+  {
+    path: "/salary-configuration",
+    element: <SalaryConfigPage />,
+  },
+  {
+    path: "/profile-settings",
+    element: <MyProfilePage />,
+  },
+  {
+    path: "/administration-settings",
+    element: <AdministrationPage />,
+  },
+  {
+    path: "/payslip/send-payslip",
+    element: <PayslipSendPage />,
+  },
+  {
+    path: "/payslip/statistics",
+    element: <PayslipStatsPage />,
+  },
+  {
+    path: "/report/master",
+    element: <ReportMasterPage />,
+  },
+  {
+    path: "/report/payslip",
+    element: <ReportPayslipPage />,
+  },
+  {
+    path: "/report/allowance",
+    element: <ReportAllowancePage />,
+  },
+  {
+    path: "/report/deduction",
+    element: <ReportDeductionPage />,
+  },
+  {
+    path: "/report/checklist",
+    element: <ReportCheckListPage />,
+  },
+  {
+    path: "/report/norminal-roll",
+    element: <ReportNorminalRollPage />,
+  },
+  {
+    path: "/report/bank-schedule",
+    element: <ReportBankSchedulePage />,
+  },
+  {
+    path: "/report/bank-statement",
+    element: <ReportBankStatementPage />,
+  },
+  {
+    path: "/report/deduct-epay",
+    element: <ReportDeductionEpayPage />,
+  },
+  {
+    path: "/report/journal",
+    element: <ReportJournalPage />,
+  },
+  {
+    path: "/report/status",
+    element: <ReportStatusPage />,
+  },
+  {
+    path: "/report/consolidation-basic",
+    element: <ReportConsolidationPage />,
+  },
+  {
+    path: "/report/charms-payroll",
+    element: <ReportCharmsPage />,
+  },
+  {
+    path: "/report/variation",
+    element: <ReportVariationPage />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(

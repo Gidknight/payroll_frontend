@@ -1,18 +1,32 @@
-import { BiCategory, BiDish, BiGroup, BiTable, BiUser } from "react-icons/bi";
-import { BsGraphUp } from "react-icons/bs";
-import { FaHandshake, FaTruckMoving } from "react-icons/fa";
-import { GiHelp, GiStockpiles, GiWizardStaff } from "react-icons/gi";
-import { GrHostMaintenance } from "react-icons/gr";
+import { BiCategory, BiTable, BiUnite, BiUser } from "react-icons/bi";
+import { BsBank, BsPeopleFill, BsPersonAdd, BsPostage } from "react-icons/bs";
+import { GiOfficeChair } from "react-icons/gi";
+import { GrCurrency, GrHostMaintenance } from "react-icons/gr";
 import {
   MdDashboard,
   MdEmail,
-  MdGroups,
+  MdHotelClass,
   MdReceiptLong,
   MdSettings,
+  MdTitle,
 } from "react-icons/md";
-import { RiAdminFill, RiExchangeDollarFill } from "react-icons/ri";
+import { RiAdminFill, RiBankCardLine } from "react-icons/ri";
 
 export const CURRENCY = "NGN";
+
+export const STATS_OPTIONS = [
+  { id: 1, text: "sent emails" },
+  {
+    id: 2,
+    text: "failed emails",
+  },
+  {
+    id: 3,
+    text: "awaiting emails",
+  },
+];
+
+export const BATCH_LIMIT = 200;
 
 export const JOB_STATUS_OPTIONS = [
   { id: "IN SERVICE", Name: "IN SERVICE" },
@@ -78,19 +92,19 @@ export const NAV_LINKS = [
         id: 21,
         title: "Add New Staff",
         link: "/staff/add-new",
-        icon: <FaHandshake />,
+        icon: <BsPersonAdd />,
       },
       {
         id: 22,
         title: "All Staffs",
         link: "/staff/all-staffs",
-        icon: <MdReceiptLong />,
+        icon: <BsPeopleFill />,
       },
     ],
   },
   {
     id: 3,
-    title: "Configuration",
+    title: "Configurations",
     link: "/configuration",
     icon: <GrHostMaintenance />,
     hasSub: true,
@@ -99,49 +113,49 @@ export const NAV_LINKS = [
         id: 31,
         title: "Titles",
         link: "/configuration/titles",
-        icon: <BiCategory />,
+        icon: <MdTitle />,
       },
       {
         id: 32,
         title: "Designations",
         link: "/configuration/designations",
-        icon: <FaTruckMoving />,
+        icon: <GiOfficeChair />,
       },
       {
         id: 33,
         title: "Units",
         link: "/configuration/units",
-        icon: <BiDish />,
+        icon: <BiUnite />,
       },
-      {
-        id: 34,
-        title: "Job Status",
-        link: "/configuration/job-status",
-        icon: <BiGroup />,
-      },
+      // {
+      //   id: 34,
+      //   title: "Job Status",
+      //   link: "/configuration/job-status",
+      //   icon: <BiGroup />,
+      // },
       {
         id: 35,
         title: "Divisions",
         link: "/configuration/divisions",
-        icon: <MdGroups />,
+        icon: <BsPostage />,
       },
       {
         id: 36,
         title: "Job Classification",
         link: "/configuration/job-classification",
-        icon: <MdGroups />,
+        icon: <MdHotelClass />,
       },
       {
         id: 37,
         title: "Bank Names",
         link: "/configuration/bank-names",
-        icon: <MdGroups />,
+        icon: <BsBank />,
       },
       {
         id: 38,
         title: "Pension Names",
         link: "/configuration/pension-names",
-        icon: <MdGroups />,
+        icon: <RiBankCardLine />,
       },
     ],
   },
@@ -149,7 +163,7 @@ export const NAV_LINKS = [
     id: 4,
     title: "Salary Configuration",
     link: "/salary-configuration",
-    icon: <GiStockpiles />,
+    icon: <GrCurrency />,
     hasSub: false,
   },
   {
@@ -210,7 +224,7 @@ export const NAV_LINKS = [
       {
         id: 59,
         title: "Deduction E-Pay Report",
-        link: "/report/deduction-epay",
+        link: "/report/deduct-epay",
         icon: <BiCategory />,
       },
       {
@@ -260,31 +274,31 @@ export const NAV_LINKS = [
       },
       {
         id: 62,
-        title: "View Stat",
-        link: "/payslip/stats",
+        title: "Statistics",
+        link: "/payslip/statistics",
         icon: <BiTable />,
       },
     ],
   },
   {
     id: 7,
-    title: "Account Settings",
-    link: "/settings",
-    icon: <MdSettings />,
-    hasSub: false,
-  },
-  {
-    id: 8,
     title: "Administration",
-    link: "/administration",
+    link: "/administration-settings",
     icon: <RiAdminFill />,
     hasSub: false,
   },
   {
-    id: 9,
-    title: "Help",
-    link: "/help",
-    icon: <GiHelp />,
+    id: 8,
+    title: "Profile Settings",
+    link: "/profile-settings",
+    icon: <MdSettings />,
     hasSub: false,
   },
+  // {
+  //   id: 9,
+  //   title: "Help",
+  //   link: "/help",
+  //   icon: <GiHelp />,
+  //   hasSub: false,
+  // },
 ];

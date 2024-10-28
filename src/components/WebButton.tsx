@@ -1,54 +1,58 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 interface WebButtonTypes {
   icon: any;
-  staff_id: number;
-  purpose: string;
+  staff_id: string;
+
   text: string;
+  isLoading: boolean;
+  sendFunction: () => void;
 }
 const WebButton = ({
   text,
   icon,
   staff_id,
-  purpose = "single",
+  isLoading = false,
+  sendFunction,
 }: WebButtonTypes) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isOnline, setIsOnline] = useState(true);
 
-  const sendSingle = async () => {
-    try {
-      setIsLoading(true);
-      const res = await fetch(`/api/staff/${staff_id}`, {
-        method: "POST",
-      });
+  useEffect(() => {
+    const handleOfflineStatus = () => {
+      setIsOnline(navigator.onLine);
+    };
 
-      const response = await res.json();
-      console.log(response);
-      if (response.status) {
-        toast.success(response.message);
-        window.location.reload();
-      } else {
-        toast.error(response.message);
-        window.location.reload();
-      }
-    } catch (error) {
-      toast.error("Error Occured");
-    } finally {
-      setIsLoading(false);
+    if (typeof window !== "undefined") {
+      setIsOnline(navigator.onLine);
+
+      window.addEventListener("online", handleOfflineStatus);
+      window.addEventListener("offline", handleOfflineStatus);
+
+      return () => {
+        window.removeEventListener("online", handleOfflineStatus);
+        window.removeEventListener("offline", handleOfflineStatus);
+      };
     }
-  };
+  }, []);
 
-  const sendMultiple = async () => {};
   return (
     <button
-      className={`flex gap-2 items-center bg-gray1 font-bold text-lg p-2 text-none rounded-xl cursor-pointer hover:bg-primary hover:text-none hover:shadow-lg hover:scale-105 transition-all duration-300 capitalize ${
-        isLoading && "hover:bg-red-500 cursor-text scale-105 bg-gray-100"
+      className={`flex gap-2 items-center bg-gray1 font-bold text-lg p-2 text-none rounded-xl border cursor-pointer hover:bg-primary hover:text-white hover:shadow-lg hover:scale-105 transition-all duration-300 capitalize ${
+        (isLoading || !isOnline) &&
+        "hover:bg-red-500 cursor-text scale-105 bg-gray-100"
       }`}
-      onClick={purpose === "single" ? sendSingle : sendMultiple}
-      disabled={isLoading}
+      onClick={sendFunction}
+      disabled={isLoading || !isOnline}
     >
       <span>{icon}</span>
-      <span>{isLoading ? "Sending..." : text}</span>
+      {isOnline ? (
+        <p>
+          <span>{isLoading ? "Sending..." : text}</span>
+        </p>
+      ) : (
+        <p>Internet is down</p>
+      )}
     </button>
   );
 };

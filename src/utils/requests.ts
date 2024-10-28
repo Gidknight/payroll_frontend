@@ -71,6 +71,54 @@ export const getAllSubunits = async () => {
   return response;
 };
 
+export const sendSingle = async (staff_id: string) => {
+  try {
+    const res = await fetch(`/api/staff/${staff_id}`, {
+      method: "POST",
+    });
+
+    const response = await res.json();
+    return response;
+  } catch (error) {
+    return { status: false, message: "Error Sending Email" };
+  }
+};
+
+export const sendBatchEmail = async () => {
+  try {
+    const res = await fetch(`/api/staff`, {
+      method: "POST",
+    });
+
+    const response = await res.json();
+    return response;
+  } catch (error) {
+    return { status: false, message: "Error Sending Email" };
+  }
+};
+
+export const sendFailedBatchEmail = async () => {
+  try {
+    const res = await fetch(`/api/stats/failed`, {
+      method: "POST",
+    });
+
+    const response = await res.json();
+    return response;
+  } catch (error) {
+    return { status: false, message: "Error Sending Email" };
+  }
+};
+
+export const prepareQueue = async () => {
+  const res = await fetch(`/api/prepare`, {
+    method: "GET",
+    cache: "no-store",
+  });
+  const response = await res.json();
+
+  return response;
+};
 export const createUser = async (body: {
   first_name: string;
   last_name: string;

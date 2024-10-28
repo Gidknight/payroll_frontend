@@ -15,6 +15,8 @@ export { default as WebButton } from "./WebButton.tsx";
 export { default as EditableField } from "./EditableField.tsx";
 export { default as ClickableField } from "./ClickableField.tsx";
 export { default as Line } from "./Line.tsx";
+export { default as ETA } from "./ETA.tsx";
+export { default as StatsNavigation } from "./StatsNavigation.tsx";
 
 export { default as ErrorCard } from "./ErrorCard.tsx";
 export { default as BackBTN } from "./BackBTN.tsx";
@@ -30,6 +32,8 @@ export { default as InpageLink } from "./InpageLink.tsx";
 export { default as StaffsTable } from "./tables/StaffsTable.tsx";
 export { default as ConfigTable } from "./tables/ConfigTable.tsx";
 export { default as BankTable } from "./tables/BankTable.tsx";
+export { default as StatTable } from "./tables/StatTable.tsx";
+export { default as StatTables } from "./tables/StatTables.tsx";
 
 // forms
 
@@ -50,6 +54,7 @@ export { default as NavLink } from "./links/NavLink.tsx";
 export { default as NavLinkWithSub } from "./links/NavLinkWithSub.tsx";
 
 // charts
+export { default as DashboardGraph } from "./charts/DashboardGraph.tsx";
 // export { default as AllItemsChart } from "./charts/AllItemsChart.tsx";
 // export { default as CSPChart } from "./charts/CSPChart.tsx";
 // export { default as TopFive } from "./charts/TopFive.tsx";
