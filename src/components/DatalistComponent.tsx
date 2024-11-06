@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TitleTypes } from "../types";
 
 interface SearchTypes {
@@ -9,6 +9,7 @@ interface SearchTypes {
   isDisabled?: boolean;
   setSelection: (option: TitleTypes) => void;
   id: string;
+  selection: TitleTypes | null;
 }
 
 const DatalistComponent = ({
@@ -18,6 +19,7 @@ const DatalistComponent = ({
   setSelection,
   isDisabled,
   id,
+  selection,
 }: SearchTypes) => {
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -27,13 +29,20 @@ const DatalistComponent = ({
 
   const handleOptionSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedOption = options.find(
-      (option) => option.name === e.target.value || option.id === e.target.value
+      (option) => option.Name === e.target.value
+      // || option.id === e.target.value
     );
     if (selectedOption) {
       setSelection(selectedOption);
     }
   };
 
+  useEffect(() => {
+    if (selection?.Name) {
+      setSelection(selection);
+      setSearchTerm(selection?.Name);
+    }
+  }, []);
   return (
     <div className="flex flex-col items-start w-full p-1">
       <div className="relative w-full">
@@ -43,7 +52,7 @@ const DatalistComponent = ({
         <input
           list={id}
           value={searchTerm}
-          disabled={isDisabled}
+          disabled={isDisabled || options.length == 0}
           onChange={handleInputChange}
           onBlur={handleOptionSelect}
           placeholder={placeholder}
@@ -51,8 +60,9 @@ const DatalistComponent = ({
         />
         <datalist id={id}>
           {options.map((option) => (
-            <option key={option.id} value={option.Name || option.GradeCode}>
-              {option.Name || option.GradeCode}
+            <option key={option.id} value={option.Name || option?.GradeCode}>
+              {option.Name || option?.GradeCode}
+              {/* {selection?.Name} */}
             </option>
           ))}
         </datalist>

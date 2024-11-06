@@ -20,7 +20,7 @@ const InpageLink = ({
 }: ButtonType) => {
   // const [isLock, setIsLock] = useState(true);
   const location = useLocation();
-  console.log({ pathname: location.pathname, to });
+  // console.log({ pathname: location.pathname, to });
   // console.log(to);
 
   return (

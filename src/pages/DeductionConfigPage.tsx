@@ -2,10 +2,10 @@ import PageLayout from "../layouts/PageLayout";
 
 import { SALARY_CONFIG_PAGES } from "../constants";
 
-const SalaryConfigPage = () => {
+const DeductionConfigPage = () => {
   return (
     <PageLayout
-      location="Salary Configuration"
+      location="Deduction Configuration"
       subtext=""
       loading={false}
       pages={SALARY_CONFIG_PAGES}
@@ -15,4 +15,4 @@ const SalaryConfigPage = () => {
   );
 };
 
-export default SalaryConfigPage;
+export default DeductionConfigPage;

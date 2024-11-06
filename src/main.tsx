@@ -39,6 +39,9 @@ import ReportStatusPage from "./pages/reports/ReportStatusPage";
 import ReportConsolidationPage from "./pages/reports/ReportConsolidationPage";
 import ReportCharmsPage from "./pages/reports/ReportCharmsPage";
 import ReportVariationPage from "./pages/reports/ReportVariationPage";
+import AllOverlays from "./components/overlays/AllOverlays";
+import AllowanceConfigPage from "./pages/AllowanceConfigPage";
+import DeductionConfigPage from "./pages/DeductionConfigPage";
 
 const router = createBrowserRouter([
   {
@@ -108,6 +111,14 @@ const router = createBrowserRouter([
   {
     path: "/salary-configuration",
     element: <SalaryConfigPage />,
+  },
+  {
+    path: "/allowances-configuration",
+    element: <AllowanceConfigPage />,
+  },
+  {
+    path: "/deductions-configuration",
+    element: <DeductionConfigPage />,
   },
   {
     path: "/profile-settings",
@@ -186,6 +197,7 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <Toaster />
+    <AllOverlays />
     <RouterProvider router={router} />
   </React.StrictMode>
 );

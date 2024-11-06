@@ -16,7 +16,9 @@ const TextWithLabel = ({
       bold && "font-semibold text-black"
     }`}
   >
-    <span className="text-base capitalize whitespace-nowrap">{label}:</span>
+    <span className="text-base capitalize whitespace-nowrap font-semibold">
+      {label}:
+    </span>
 
     <span
       className={`

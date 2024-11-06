@@ -1,7 +1,12 @@
 import { Link } from "react-router-dom";
 import TextWithLabel from "./TextWithLabel";
 import { BiPrinter } from "react-icons/bi";
-import { StaffDetailsTypes, SubUnitTypes } from "../types";
+import {
+  AllowanceTypes,
+  DeductionTypes,
+  StaffDetailsTypes,
+  SubUnitTypes,
+} from "../types";
 import WebButton from "./WebButton";
 import { MdEmail } from "react-icons/md";
 import EditableField from "./EditableField";
@@ -10,6 +15,9 @@ import EditableDatalist from "./EditableDatalist";
 import { JOB_LEVELS, JOB_STEPS } from "../constants";
 import SecondaryButton from "./SecondaryButton";
 import ClickableField from "./ClickableField";
+import { useGeneralStore } from "../stores/general";
+import toast from "react-hot-toast";
+import { axiosInstance } from "../libs";
 
 const StaffData = ({
   data,
@@ -19,10 +27,20 @@ const StaffData = ({
 }) => {
   const [loading, setLoading] = useState(false);
 
+  const setIsAddingAllowance = useGeneralStore(
+    (state) => state.setIsAddingAllowance
+  );
+
+  const setIsAddingDeduction = useGeneralStore(
+    (state) => state.setIsAddingDeduction
+  );
+
+  const setActiveStaff = useGeneralStore((state) => state.setActiveStaff);
+
   return (
     <div className="space-y-5 mb-20">
       <div className=" w-full flex flex-col gap-4 bg-white p-2 shadow-lg border-t-4 border-live">
-        <div className="w-full flex flex-row items-center justify-between">
+        <div className="w-full flex flex-row items-center justify-between border-b-2 border-slate-300 pb-2">
           <div className="flex flex-row items-center justify-start gap-4">
             <div className="flex items-center justify-center gap-2 px-3 py-1 bg-white shadow-md rounded-full ">
               <p className="font-bold">Slip Status:</p>
@@ -62,9 +80,9 @@ const StaffData = ({
           </Link>
         </div>
 
-        <div className="flex flex-col gap-2">
-          <div className="space-y-2 px-5 py-2">
-            <TextWithLabel label="Title" text={data?.title} cap={false} />
+        <div className="flex flex-flex w-full items-start justify-between gap-10">
+          <div className="space-y-2 px-5 py-2 w-1/2">
+            <TextWithLabel label="Title" text={data?.title.Name} cap={false} />
             <TextWithLabel
               label="Staff Number"
               text={data?.staff_no}
@@ -82,12 +100,14 @@ const StaffData = ({
               text={data?.other_name || ""}
               cap={false}
             />
+            <TextWithLabel label="gender" text={data?.gender} cap={false} />
             <TextWithLabel
               label="email address"
               text={data?.email_address}
               cap={false}
             />
-
+          </div>
+          <div className="w-1/2">
             <TextWithLabel
               label="Sub Unit"
               text={data?.jobs?.sub_unit?.Name?.trim()}
@@ -133,7 +153,7 @@ const StaffData = ({
             />
             <TextWithLabel
               label="current month"
-              text={data?.month + " - " + data?.year}
+              text={data?.jobs?.month + " - " + data?.jobs?.year}
               cap={false}
             />
           </div>
@@ -144,13 +164,17 @@ const StaffData = ({
       <div>
         <div className="w-full flex flex-row items-start justify-evenly gap-10 pt-5">
           <div id="allowances" className="w-1/2 py-3 rounded-sm">
-            <div className="flex flex-row items-center justify-between w-full">
+            <div className="flex flex-row items-center justify-between w-full pb-2">
               <h2 className="font-bold text-center text-2xl text-nowrap">
                 Earning Summary
               </h2>
               <div>
                 <SecondaryButton
-                  cusFunc={() => {}}
+                  cusFunc={() => {
+                    setIsAddingDeduction(false);
+                    setActiveStaff({ id: data?.id });
+                    setIsAddingAllowance(true);
+                  }}
                   isLoading={loading}
                   title="+ Add Allowance"
                   isLock={loading}
@@ -163,7 +187,7 @@ const StaffData = ({
                   <p>Detail</p>
                   <p>Amount (NGN)</p>
                 </div>
-                <div className=" px-2 ">
+                <div className=" px-5 ">
                   <TextWithLabel
                     label="Basic Salary"
                     text={`NGN ${parseFloat(
@@ -171,18 +195,23 @@ const StaffData = ({
                     )?.toLocaleString("en-US")}`}
                   />
                 </div>
-                {data?.allowances.map((allow: any, index: any) => (
-                  <div key={index} className=" px-2 ">
+                {data?.allowances.map((allow: AllowanceTypes, index: any) => (
+                  <div key={index} className=" px-5 ">
                     <ClickableField
                       label={allow?.AllowanceNames?.Name}
-                      text={allow?.Amount?.toLocaleString("en-US")}
+                      text={allow?.Amount}
                       cap={false}
                       bold={false}
+                      inputType={"number"}
+                      loading={loading}
+                      id={allow.id}
+                      type="allowance"
+                      setLoading={setLoading}
                     />
                   </div>
                 ))}
 
-                <div className=" py-2 px-2 rounded-t-xl border-t border-slate-500 shadow-md">
+                <div className=" py-2 px-5 rounded-t-xl border-t border-slate-500 shadow-md">
                   <TextWithLabel
                     label="Total Allowance"
                     text={
@@ -222,13 +251,17 @@ const StaffData = ({
           </div>
           <div id="deductions" className="w-1/2  py-3">
             {/* deduction */}
-            <div className="flex flex-row items-center justify-between w-full">
+            <div className="flex flex-row items-center justify-between w-full pb-2">
               <h2 className="font-bold text-center text-2xl text-nowrap">
                 Deductions Summary
               </h2>
               <div>
                 <SecondaryButton
-                  cusFunc={() => {}}
+                  cusFunc={() => {
+                    setIsAddingAllowance(false);
+                    setActiveStaff({ id: data?.id });
+                    setIsAddingDeduction(true);
+                  }}
                   isLoading={loading}
                   title="+ Add Deduction"
                   isLock={loading}
@@ -242,17 +275,22 @@ const StaffData = ({
                   <p>Detail</p>
                   <p>Amount (NGN)</p>
                 </div>
-                {data?.deductions.map((deduct: any, index: any) => (
-                  <div key={index} className=" px-2 ">
+                {data?.deductions.map((deduct: DeductionTypes, index: any) => (
+                  <div key={index} className=" px-5 ">
                     <ClickableField
                       label={deduct?.DeductionNames?.Name}
-                      text={deduct?.Amount?.toLocaleString("en-US")}
+                      text={deduct?.Amount}
                       cap={false}
                       bold={false}
+                      id={deduct?.id || 0}
+                      inputType={"number"}
+                      loading={loading}
+                      setLoading={setLoading}
+                      type="deduction"
                     />
                   </div>
                 ))}
-                <div className=" py-2 px-2 rounded-t-xl border-t border-slate-500 shadow-md">
+                <div className=" py-2 px-5 rounded-t-xl border-t border-slate-500 shadow-md">
                   <TextWithLabel
                     label="Total Deduction"
                     text={

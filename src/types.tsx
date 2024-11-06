@@ -8,6 +8,7 @@ export interface AccountTypes {
   bank_name_id: number;
   bank_name: string;
   account_number: string;
+  sortcode: string;
   pension_acct_id: number;
   pension_acct_name: string | null;
   pension_acct_no: string | null;
@@ -19,7 +20,7 @@ export interface SalaryScaleTypes {
   level: string;
   step: string;
   name: string;
-  grade_code: string;
+  Name: string;
 }
 
 export interface SubUnitTypes {
@@ -29,11 +30,19 @@ export interface SubUnitTypes {
 }
 
 export interface JobsTypes {
+  month: string;
+  year: number;
   amount: string;
   payable_month: number;
   total_month: number;
+  hired_date: string;
+  status: string | null;
+  classification: TitleTypes;
+  division: TitleTypes;
+  designation: TitleTypes;
   salary_scale: SalaryScaleTypes;
   sub_unit: SubUnitTypes;
+  unit: TitleTypes;
   date: {
     month: string;
     year: number;
@@ -73,15 +82,15 @@ export interface DeductionTypes {
 
 export interface StaffDetailsTypes {
   id: number;
-  title: string;
+  title: TitleTypes;
   surname: string;
   firstname: string;
   other_name?: string;
   staff_no: string;
+  other_no?: string;
+  gender: string | null;
   email_address: string | null;
   dob: any;
-  month: string;
-  year: number;
   account: AccountTypes;
   jobs: JobsTypes;
   allowances: AllowanceTypes[];
@@ -99,6 +108,8 @@ export interface StaffDetailsTypes {
   pension_banks?: BankTypes[];
   salary_scales?: SalaryScaleTypes[];
   job_divisions?: TitleTypes[];
+  designations?: TitleTypes[];
+  classifications?: TitleTypes[];
 }
 
 export interface DatalistOptionsTypes {
@@ -106,6 +117,12 @@ export interface DatalistOptionsTypes {
   Name: string;
 }
 
+export interface PageTypes {
+  id: number;
+  title: string;
+  to: string;
+  icon: any;
+}
 export interface UserIDType {
   user_id: string;
 }

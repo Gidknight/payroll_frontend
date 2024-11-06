@@ -12,6 +12,7 @@ import toast from "react-hot-toast";
 import { useAuthStore } from "../../stores/authStore";
 import { axiosInstance } from "../../libs";
 import { useNavigate, useNavigation } from "react-router-dom";
+import { GENDER_OPTIONS } from "../../constants";
 
 const NewStaffForm = (): JSX.Element => {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const NewStaffForm = (): JSX.Element => {
   const [email, setEmail] = useState("");
   const [titles, setTitles] = useState<TitleTypes[]>([]);
   const [dob, setDob] = useState("");
+  const [gender, setGender] = useState("");
 
   const [selectedTitle, setSelectedTitle] = useState<TitleTypes | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
@@ -42,23 +44,14 @@ const NewStaffForm = (): JSX.Element => {
     setError(null);
     let isError = false;
 
-    if (!productName) {
-      setError({ type: "name", message: "A Name is required" });
+    if (!surName) {
+      setError({ type: "surname", message: "Surname is required" });
       isError = true;
-    } else if (price <= 0) {
-      setError({ type: "price", message: "Price is required" });
+    } else if (!firstName) {
+      setError({ type: "firstname", message: "First Name is required" });
       isError = true;
-    } else if (quantity <= 0) {
-      setError({ type: "quantity", message: "Quantity is required" });
-      isError = true;
-    } else if (errorMessage == "category_id" || !category) {
-      setError({ type: "category", message: "A Category is Required" });
-      isError = true;
-    } else if (errorMessage == "supplier_id" || !supplier) {
-      setError({ type: "supplier", message: "A Supplier is Required" });
-      isError = true;
-    } else if (statusCode == 409) {
-      setError({ type: "name", message: "Product Name Already Exist" });
+    } else if (!dob) {
+      setError({ type: "dob", message: "A valid Date Of Birth Is Required" });
       isError = true;
     }
     return isError;
@@ -86,18 +79,21 @@ const NewStaffForm = (): JSX.Element => {
 
       const formData = {
         title_id: selectedTitle,
-        surname: surName,
-        first_name: firstName,
-        other_names: otherNames,
+        surname: surName?.toUpperCase(),
+        first_name: firstName?.toUpperCase(),
+        other_names: otherNames?.toLowerCase(),
         staff_no: staffNumber,
         email_address: email,
         est_number: estNumber,
         dob: dob,
+        gender,
       };
       const response = await axiosInstance.post("/staffs", formData);
       if (response.status == 201) {
         const id = response.data.id;
-        navigate(`/staff/view-data/${id}`, { replace: true });
+        setTimeout(() => {
+          navigate(`/staff/view-data/${id}`, { replace: true });
+        }, 500);
       }
     } catch (error) {
       console.log(error);
@@ -182,6 +178,18 @@ const NewStaffForm = (): JSX.Element => {
         </div>
 
         <div className="flex flex-row items-center justify-evenly gap-2 w-full">
+          <ComboBox
+            defaultMessage={"-- Select Gender --"}
+            value={gender}
+            showDefault={true}
+            id={"gender"}
+            isDisabled={false}
+            label={"Gender"}
+            onSelect={setGender}
+            options={GENDER_OPTIONS}
+            error={""}
+            subLabel={""}
+          />
           <TextInputWithLabel
             inputType="text"
             placeholder="Staff Number"
@@ -189,16 +197,6 @@ const NewStaffForm = (): JSX.Element => {
             onUpdate={setStaffNumber}
             isDisabled={false}
             label="Staff Number"
-            error={""}
-            isRequired={false}
-          />{" "}
-          <TextInputWithLabel
-            inputType="text"
-            placeholder="Establishment Number"
-            string={estNumber}
-            onUpdate={setEstNumber}
-            isDisabled={false}
-            label="Establishment Number"
             error={""}
             isRequired={false}
           />
@@ -222,25 +220,39 @@ const NewStaffForm = (): JSX.Element => {
             onUpdate={setDob}
             isDisabled={false}
             label="Date Of Birth"
-            error={""}
+            error={showError("dob")}
             isRequired={false}
           />
         </div>
 
-        <div className="flex flex-row items-end justify-evenly gap-5">
-          <PrimaryButton
-            title="submit"
-            type={"submit"}
-            cusFunc={() => {}}
-            isLoading={isCreating}
-            isLock={!surName || !firstName || !email || !dob ? true : false}
-          />
-          <SecondaryButton
-            title="clear"
-            cusFunc={cancelAdd}
-            isLoading={isLoading}
-            isLock={false}
-          />
+        <div className="flex flex-row items-center justify-evenly gap-2 w-full">
+          <div className="w-1/2">
+            <TextInputWithLabel
+              inputType="text"
+              placeholder="Establishment Number"
+              string={estNumber}
+              onUpdate={setEstNumber}
+              isDisabled={false}
+              label="Establishment Number"
+              error={""}
+              isRequired={false}
+            />
+          </div>
+          <div className="flex flex-row items-center justify-around w-1/2 gap-10">
+            <PrimaryButton
+              title="submit"
+              type={"submit"}
+              cusFunc={() => {}}
+              isLoading={isCreating}
+              isLock={!surName || !firstName || !dob ? true : false}
+            />
+            <SecondaryButton
+              title="clear"
+              cusFunc={cancelAdd}
+              isLoading={isLoading}
+              isLock={false}
+            />
+          </div>
         </div>
       </form>
     </div>

@@ -19,7 +19,7 @@ const TitleForm = ({ purpose }: { purpose: string }): JSX.Element => {
       let response;
       if (purpose === "title") {
         response = await axiosInstance.post("/titles", {
-          Name: name.toUpperCase(),
+          Name: name,
         });
       } else if (purpose === "designation") {
         response = await axiosInstance.post("/designations", {

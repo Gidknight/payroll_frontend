@@ -4,18 +4,21 @@ import {
   SecondaryButton,
   TextInputWithLabel,
 } from "../components";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FormEvent, useEffect, useState } from "react";
 import { axiosInstance } from "../libs";
 import { ShowErrorObject, StaffDetailsTypes, TitleTypes } from "../types";
 import StaffLayout from "../layouts/StaffLayout";
 import toast from "react-hot-toast";
+import { convertDate } from "../utils";
+import { GENDER_OPTIONS } from "../constants";
 
 const StaffEditBiodataPage = () => {
   const params = useParams();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [staff, setStaff] = useState<StaffDetailsTypes | null>(null);
-  const [isCreating, setIsCreating] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   // form data
@@ -26,6 +29,7 @@ const StaffEditBiodataPage = () => {
   const [estNumber, setEstNumber] = useState("");
   const [email, setEmail] = useState("");
   const [dob, setDob] = useState("");
+  const [gender, setGender] = useState("");
 
   const [selectedTitle, setSelectedTitle] = useState<TitleTypes | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
@@ -42,23 +46,14 @@ const StaffEditBiodataPage = () => {
     setError(null);
     let isError = false;
 
-    if (!productName) {
-      setError({ type: "name", message: "A Name is required" });
+    if (!surName) {
+      setError({ type: "surname", message: "Surname is required" });
       isError = true;
-    } else if (price <= 0) {
-      setError({ type: "price", message: "Price is required" });
+    } else if (!firstName) {
+      setError({ type: "firstname", message: "First Name is required" });
       isError = true;
-    } else if (quantity <= 0) {
-      setError({ type: "quantity", message: "Quantity is required" });
-      isError = true;
-    } else if (errorMessage == "category_id" || !category) {
-      setError({ type: "category", message: "A Category is Required" });
-      isError = true;
-    } else if (errorMessage == "supplier_id" || !supplier) {
-      setError({ type: "supplier", message: "A Supplier is Required" });
-      isError = true;
-    } else if (statusCode == 409) {
-      setError({ type: "name", message: "Product Name Already Exist" });
+    } else if (!dob) {
+      setError({ type: "dob", message: "A valid Date Of Birth Is Required" });
       isError = true;
     }
     return isError;
@@ -68,14 +63,15 @@ const StaffEditBiodataPage = () => {
     try {
       setLoading(true);
       // toast.success(id);
-      const response = await axiosInstance.get("/staffs/" + id);
+      const response = await axiosInstance.get("/staffs/biodata-details/" + id);
       // const subs = await getAllSubunits();
 
       // if (subs.status == 200) {
       //   setSubUnits(subs.data);
       // }
       if (response.status == 200) {
-        setSelectedTitle(response?.data?.title);
+        // console.log(response.data.title);
+        setSelectedTitle(response?.data?.title?.id);
         setSurName(response?.data?.surname);
         setFirstName(response?.data?.firstname);
         setOtherNames(response?.data?.other_name);
@@ -83,6 +79,7 @@ const StaffEditBiodataPage = () => {
         setEstNumber(response?.data?.other_no);
         setEmail(response?.data?.email_address);
         setDob(response?.data?.dob);
+        setGender(response?.data?.gender);
         setStaff(response.data);
       }
     } catch (error) {
@@ -96,30 +93,50 @@ const StaffEditBiodataPage = () => {
     let isError = validate();
     if (isError) return;
     try {
-      setIsCreating(true);
+      setIsUpdating(true);
 
       const formData = {
         title_id: selectedTitle,
-        surname: surName,
-        first_name: firstName,
-        other_names: otherNames,
+        surname: surName?.toUpperCase(),
+        first_name: firstName?.toUpperCase(),
+        other_names: otherNames?.toUpperCase(),
         staff_no: staffNumber,
         email_address: email,
         est_number: estNumber,
         dob: dob,
+        gender,
       };
-      const response = await axiosInstance.post("/staffs", formData);
+      const response = await axiosInstance.patch(
+        "/staffs/biodata-details/" + params.id,
+        formData
+      );
       if (response.status == 201) {
-        const id = response.data.id;
-        navigate(`/staffs/${id}`, { replace: true });
+        // const id = response.data.id;
+        toast.success(response.data.message);
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+        // navigate(`/staffs/${id}`, { replace: true });
       }
     } catch (error) {
       console.log(error);
-      toast.error("Error Creating New Staff");
+      toast.error("Error Updating Staff Detail");
     } finally {
-      setIsCreating(false);
+      setIsUpdating(false);
     }
   };
+  const handleReset = () => {
+    setSelectedTitle(staff?.title || null);
+    setSurName(staff?.surname || "");
+    setFirstName(staff?.firstname || "");
+    setOtherNames(staff?.other_name || "");
+    setStaffNumber(staff?.staff_no || "");
+    setEstNumber(staff?.other_no || "");
+    setEmail(staff?.email_address || "");
+    setDob(staff?.dob);
+    setGender(staff?.gender || "");
+  };
+
   useEffect(() => {
     if (params.id) {
       fetchData(params.id);
@@ -127,9 +144,9 @@ const StaffEditBiodataPage = () => {
   }, []);
   return (
     <StaffLayout
-      fullNames={`${staff?.title || ""} ${staff?.surname} ${staff?.firstname} ${
-        staff?.other_name
-      }`}
+      fullNames={`${staff?.title?.Name || ""} ${staff?.surname} ${
+        staff?.firstname
+      } ${staff?.other_name || ""}`}
       loading={loading}
       staffNo={staff?.staff_no || ""}
     >
@@ -151,7 +168,7 @@ const StaffEditBiodataPage = () => {
                   isDisabled={false}
                   label={"Title"}
                   onSelect={setSelectedTitle}
-                  options={staff.titles}
+                  options={staff.titles || []}
                   error={""}
                   subLabel={""}
                 />
@@ -185,10 +202,23 @@ const StaffEditBiodataPage = () => {
                   isDisabled={false}
                   label="Other Names"
                   error={showError("othernames")}
+                  isRequired={false}
                 />
               </div>
 
               <div className="flex flex-row items-center justify-evenly gap-10 w-full">
+                <ComboBox
+                  defaultMessage={"-- Select Gender --"}
+                  value={gender}
+                  showDefault={true}
+                  id={"gender"}
+                  isDisabled={false}
+                  label={"Gender"}
+                  onSelect={setGender}
+                  options={GENDER_OPTIONS}
+                  error={""}
+                  subLabel={""}
+                />
                 <TextInputWithLabel
                   inputType="text"
                   placeholder="Staff Number"
@@ -196,16 +226,6 @@ const StaffEditBiodataPage = () => {
                   onUpdate={setStaffNumber}
                   isDisabled={false}
                   label="Staff Number"
-                  error={""}
-                  isRequired={false}
-                />{" "}
-                <TextInputWithLabel
-                  inputType="text"
-                  placeholder="Establishment Number"
-                  string={estNumber}
-                  onUpdate={setEstNumber}
-                  isDisabled={false}
-                  label="Establishment Number"
                   error={""}
                   isRequired={false}
                 />
@@ -231,26 +251,40 @@ const StaffEditBiodataPage = () => {
                   label="Date Of Birth"
                   error={""}
                   isRequired={false}
-                  second_text={dob}
+                  second_text={String(convertDate(staff?.dob, true))}
                 />
               </div>
 
-              <div className="flex flex-row items-end justify-evenly gap-10">
-                <PrimaryButton
-                  title="submit"
-                  type={"submit"}
-                  cusFunc={() => {}}
-                  isLoading={isCreating}
-                  isLock={
-                    !surName || !firstName || !email || !dob ? true : false
-                  }
-                />
-                <SecondaryButton
-                  title="clear"
-                  cusFunc={() => {}}
-                  isLoading={isLoading}
-                  isLock={false}
-                />
+              <div className="flex flex-row items-end justify-evenly gap-2 w-full">
+                <div className="w-1/2">
+                  <TextInputWithLabel
+                    inputType="text"
+                    placeholder="Establishment Number"
+                    string={estNumber}
+                    onUpdate={setEstNumber}
+                    isDisabled={false}
+                    label="Establishment Number"
+                    error={""}
+                    isRequired={false}
+                  />
+                </div>
+                <div className="flex flex-row items-center justify-around w-1/2 gap-10">
+                  <div>
+                    <PrimaryButton
+                      title="submit"
+                      type={"submit"}
+                      cusFunc={() => {}}
+                      isLoading={isUpdating}
+                      isLock={!surName || !firstName || !dob ? true : false}
+                    />
+                  </div>
+                  {/* <SecondaryButton
+                    title="Reset"
+                    cusFunc={handleReset}
+                    isLoading={isLoading}
+                    isLock={false}
+                  /> */}
+                </div>
               </div>
             </form>
           </div>

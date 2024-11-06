@@ -2,10 +2,16 @@ import { ComboBox, PrimaryButton, TextInputWithLabel } from "../components";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { axiosInstance } from "../libs";
-import { SalaryScaleTypes, StaffDetailsTypes, TitleTypes } from "../types";
+import {
+  AccountTypes,
+  SalaryScaleTypes,
+  StaffDetailsTypes,
+  TitleTypes,
+} from "../types";
 import StaffLayout from "../layouts/StaffLayout";
 import DatalistComponent from "../components/DatalistComponent";
 import { JOB_STATUS_OPTIONS } from "../constants";
+import toast from "react-hot-toast";
 // import BackBTN from "../components/BackBTN";
 // import NewStaffForm from "../components/forms/NewStaffForm";
 
@@ -15,33 +21,84 @@ const StaffEditAccountDetailsPage = () => {
   const [staff, setStaff] = useState<StaffDetailsTypes | null>(null);
 
   // form data
-  const [accountNmuber, setAccountNmuber] = useState<string | null>(null);
+  const [accountNumber, setAccountNumber] = useState<string>("");
   const [sortCode, setSortCode] = useState<string | null>(null);
-  const [staffType, setStaffType] = useState<string | null>("");
-  const [selectedSalaryScale, setSelectedSalaryScale] =
-    useState<SalaryScaleTypes | null>(null);
-  const [selectedDivision, setSelectedDivision] = useState<TitleTypes | null>(
-    null
-  );
+  const [bankId, setBankId] = useState<TitleTypes | null>(null);
+  const [pensionId, setPensionId] = useState<TitleTypes | null>(null);
+  const [pensionNumber, setPensionNumber] = useState<string>("");
 
   const fetchData = async (id: string) => {
     try {
       setLoading(true);
       // toast.success(id);
-      const response = await axiosInstance.get("/staffs/" + id);
+      const response = await axiosInstance.get("/staffs/account-details/" + id);
       // const subs = await getAllSubunits();
 
       // if (subs.status == 200) {
       //   setSubUnits(subs.data);
       // }
       if (response.status == 200) {
-        setStaff(response.data);
+        const account: AccountTypes = response?.data?.account;
+        // console.log({ account });
+        setStaff(response?.data);
+        setAccountNumber(account.account_number);
+        setPensionNumber(account?.pension_acct_no || "");
+        setSortCode(account.sortcode);
+        setBankId({ id: account.bank_name_id, Name: account.bank_name });
+        setPensionId({
+          id: account.pension_acct_id,
+          Name: account?.pension_acct_name || "",
+        });
       }
     } catch (error) {
     } finally {
       setLoading(false);
     }
   };
+
+  const handleSubmission = async (e: any) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      let response;
+      if (!staff?.account?.bank_name_id) {
+        // create new jobs
+        response = await axiosInstance.post(
+          "/staffs/account-details/" + params.id,
+          {
+            account_number: accountNumber,
+            bank_id: bankId?.id,
+            sortcode: sortCode,
+            pension_id: pensionId?.id,
+            pension_number: pensionNumber,
+          }
+        );
+      } else {
+        // update jobs
+        response = await axiosInstance.patch(
+          "/staffs/account-details/" + params.id,
+          {
+            account_number: accountNumber,
+            bank_id: bankId?.id,
+            sortcode: sortCode,
+            pension_id: pensionId?.id,
+            pension_number: pensionNumber,
+          }
+        );
+      }
+      if (response.status == 201) {
+        toast.success(response.data.message);
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+      }
+    } catch (error) {
+      toast.error("Error Updating Staff Account Details");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (params.id) {
       fetchData(params.id);
@@ -49,9 +106,9 @@ const StaffEditAccountDetailsPage = () => {
   }, []);
   return (
     <StaffLayout
-      fullNames={`${staff?.title || ""} ${staff?.surname} ${staff?.firstname} ${
-        staff?.other_name
-      }`}
+      fullNames={`${staff?.title?.Name || ""} ${staff?.surname} ${
+        staff?.firstname
+      } ${staff?.other_name || ""}`}
       loading={loading}
       staffNo={staff?.staff_no || ""}
     >
@@ -61,21 +118,25 @@ const StaffEditAccountDetailsPage = () => {
             <h1 className="header-text text-center pb-5">
               Edit Account Details Form
             </h1>
-            <form className=" w-full flex flex-col items-center justify-center gap-5">
+            <form
+              onSubmit={handleSubmission}
+              className=" w-full flex flex-col items-center justify-center gap-5"
+            >
               <div className="w-full flex flex-row items-center justify-center gap-5">
                 <DatalistComponent
                   options={staff.bank_names || []}
                   label="Bank Name"
                   placeholder="Bank Name"
-                  setSelection={setSelectedSalaryScale}
+                  setSelection={setBankId}
                   isDisabled={loading}
                   id="scale-options"
+                  selection={bankId}
                 />
                 <TextInputWithLabel
                   inputType="number"
-                  onUpdate={setAccountNmuber}
+                  onUpdate={setAccountNumber}
                   placeholder="Account Number"
-                  string={accountNmuber}
+                  string={accountNumber}
                   isRequired={true}
                   label="Account Number"
                 />
@@ -86,7 +147,7 @@ const StaffEditAccountDetailsPage = () => {
                   onUpdate={setSortCode}
                   placeholder="Sort Code"
                   string={sortCode}
-                  isRequired={true}
+                  isRequired={false}
                   label="Sort Code"
                 />
                 <DatalistComponent
@@ -94,23 +155,32 @@ const StaffEditAccountDetailsPage = () => {
                   options={staff.pension_banks || []}
                   label="Pension Bank"
                   placeholder="Pension Bank"
-                  setSelection={setSelectedDivision}
+                  setSelection={setPensionId}
                   isDisabled={loading}
+                  selection={pensionId}
                 />
               </div>
 
               <div className="w-full flex flex-row items-center justify-center gap-5">
                 <TextInputWithLabel
                   inputType="number"
-                  onUpdate={setSortCode}
+                  onUpdate={setPensionNumber}
                   placeholder="Pension Account Number"
-                  string={sortCode}
-                  isRequired={true}
+                  string={pensionNumber}
+                  isRequired={false}
                   label="Pension Account Number"
                 />
                 <div className="w-full">
                   <div className="w-40">
-                    <PrimaryButton title="Save" />
+                    <PrimaryButton
+                      title={
+                        !staff?.account?.bank_name_id ? "Create" : "Update"
+                      }
+                      isLoading={loading}
+                      cusFunc={() => {}}
+                      isLock={!bankId?.id && !accountNumber ? true : false}
+                      type={"submit"}
+                    />
                   </div>
                 </div>
               </div>

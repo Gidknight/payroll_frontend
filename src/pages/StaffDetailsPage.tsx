@@ -42,9 +42,9 @@ const StaffDetailsPage = () => {
   }, []);
   return (
     <StaffLayout
-      fullNames={`${staff?.title || ""} ${staff?.surname} ${staff?.firstname} ${
-        staff?.other_name
-      }`}
+      fullNames={`${staff?.title?.Name || ""} ${staff?.surname} ${
+        staff?.firstname
+      } ${staff?.other_name || ""}`}
       loading={loading}
       staffNo={staff?.staff_no || ""}
     >

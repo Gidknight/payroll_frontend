@@ -1,5 +1,13 @@
-import { BiCategory, BiTable, BiUnite, BiUser } from "react-icons/bi";
+import {
+  BiCategory,
+  BiTable,
+  BiTrendingDown,
+  BiTrendingUp,
+  BiUnite,
+  BiUser,
+} from "react-icons/bi";
 import { BsBank, BsPeopleFill, BsPersonAdd, BsPostage } from "react-icons/bs";
+import { FaBalanceScale } from "react-icons/fa";
 import { GiOfficeChair } from "react-icons/gi";
 import { GrCurrency, GrHostMaintenance } from "react-icons/gr";
 import {
@@ -11,6 +19,7 @@ import {
   MdTitle,
 } from "react-icons/md";
 import { RiAdminFill, RiBankCardLine } from "react-icons/ri";
+import { PageTypes } from "../types";
 
 export const CURRENCY = "NGN";
 
@@ -33,6 +42,12 @@ export const JOB_STATUS_OPTIONS = [
   { id: "SUSPENDED", Name: "SUSPENDED" },
   { id: "TERMINATED", Name: "TERMINATED" },
   { id: "RETIRED", Name: "RETIRED" },
+];
+
+export const GENDER_OPTIONS = [
+  { id: "MALE", Name: "MALE" },
+  { id: "FEMALE", Name: "FEMALE" },
+  { id: "", Name: "Rather Not Say" },
 ];
 
 export const JOB_LEVELS = [
@@ -301,4 +316,25 @@ export const NAV_LINKS = [
   //   icon: <GiHelp />,
   //   hasSub: false,
   // },
+];
+
+export const SALARY_CONFIG_PAGES: PageTypes[] = [
+  {
+    id: 1,
+    title: "Salary Scale",
+    icon: <FaBalanceScale />,
+    to: "/salary-configuration",
+  },
+  {
+    id: 2,
+    title: "Allowance",
+    icon: <BiTrendingUp />,
+    to: "/allowances-configuration",
+  },
+  {
+    id: 3,
+    title: "Deduction",
+    icon: <BiTrendingDown />,
+    to: "/deductions-configuration",
+  },
 ];
