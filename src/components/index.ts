@@ -34,6 +34,7 @@ export { default as ConfigTable } from "./tables/ConfigTable.tsx";
 export { default as BankTable } from "./tables/BankTable.tsx";
 export { default as StatTable } from "./tables/StatTable.tsx";
 export { default as StatTables } from "./tables/StatTables.tsx";
+export { default as AllowDeductTable } from "./tables/AllowDeductTable.tsx";
 
 // forms
 
@@ -95,3 +96,6 @@ export { default as DashboardGraph } from "./charts/DashboardGraph.tsx";
 export { default as NewStaffForm } from "./forms/NewStaffForm.tsx";
 export { default as TitleForm } from "./forms/TitleForm.tsx";
 export { default as BankForm } from "./forms/BankForm.tsx";
+export { default as AllowDeductForm } from "./forms/AllowDeductForm.tsx";
+export { default as ChangePasswordForm } from "./forms/ChangePasswordForm.tsx";
+export { default as ChangeAccountDetailsForm } from "./forms/ChangeAccountDetailsForm.tsx";

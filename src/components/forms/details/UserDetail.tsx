@@ -1,61 +1,66 @@
-import { useState } from 'react'
-import TextInput from '../../TextInput'
-import SecondaryButton from '../../SecondaryButton'
-import PrimaryButton from '../../PrimaryButton'
-import toast from 'react-hot-toast'
-import { updateUserDetail } from '../../../utils/requests'
+import { useState } from "react";
+import TextInput from "../../TextInput";
+import SecondaryButton from "../../SecondaryButton";
+import PrimaryButton from "../../PrimaryButton";
+import toast from "react-hot-toast";
+// import { updateUserDetail } from '../../../utils/requests'
 
 const UserDetail = ({
   user_id,
   value,
   title,
   subText,
-  inputType = 'text'
+  inputType = "text",
 }: {
-  user_id: string
-  value?: string
-  title: string
-  subText?: string
-  inputType: string
+  user_id: string;
+  value?: string;
+  title: string;
+  subText?: string;
+  inputType: string;
 }) => {
-  const [detail, setDetail] = useState<string | number>(value || '')
-  const [isLoading, setIsLoading] = useState(false)
-  const [updateDetail, setUpdateDetail] = useState(false)
-  const [error, setError] = useState('')
+  const [detail, setDetail] = useState<string | number>(value || "");
+  const [isLoading, setIsLoading] = useState(false);
+  const [updateDetail, setUpdateDetail] = useState(false);
+  const [error, setError] = useState("");
   const cancelUpdate = () => {
-    setError('')
-    setUpdateDetail(false)
-    setDetail(value || '')
-  }
+    setError("");
+    setUpdateDetail(false);
+    setDetail(value || "");
+  };
+  const updateUserDetail = async (body: {
+    id: string | number;
+    value: string | number;
+    type: string;
+  }) => {};
 
   const handleChange = async () => {
-    setError('')
+    setError("");
     if (!detail) {
-      setError(title + ' is Required')
-      return
+      setError(title + " is Required");
+      return;
     }
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       const response = await updateUserDetail({
         id: user_id,
         value: detail,
-        type: title
-      })
+        type: title,
+      });
       if (response?.status == 201) {
-        toast.success(response?.data?.message)
-        setUpdateDetail(false)
+        toast.success(response?.data?.message);
+        setUpdateDetail(false);
 
         // window.location.reload()
       } else {
-        toast.error(response?.data?.message)
+        toast.error(response?.data?.message);
       }
     } catch (error) {
-      console.log(error)
-      toast.error('Inter Server Error')
+      console.log(error);
+      toast.error("Inter Server Error");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className=" p-5 w-full flex flex-col md:flex-row items-center justify-between border-2 border-slate-400 rounded-2xl shadow-md">
@@ -79,7 +84,7 @@ const UserDetail = ({
               title="submit"
               isLoading={isLoading}
               cusFunc={handleChange}
-              type={'submit'}
+              type={"submit"}
               isLock={false}
             />
             <SecondaryButton
@@ -101,7 +106,7 @@ const UserDetail = ({
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default UserDetail
+export default UserDetail;

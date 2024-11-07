@@ -52,9 +52,9 @@ const AddAllowanceOverlay = ({ user_id }: { user_id?: string }) => {
         //   window.location.reload();
         // }, 500);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
-      toast.error("Error Adding Allowance");
+      toast.error(error?.response?.data?.message);
     } finally {
       setLoading(false);
     }

@@ -4,6 +4,7 @@ import { BiPrinter } from "react-icons/bi";
 import {
   AllowanceTypes,
   DeductionTypes,
+  IndividualAllowanceTypes,
   StaffDetailsTypes,
   SubUnitTypes,
 } from "../types";
@@ -195,21 +196,23 @@ const StaffData = ({
                     )?.toLocaleString("en-US")}`}
                   />
                 </div>
-                {data?.allowances.map((allow: AllowanceTypes, index: any) => (
-                  <div key={index} className=" px-5 ">
-                    <ClickableField
-                      label={allow?.AllowanceNames?.Name}
-                      text={allow?.Amount}
-                      cap={false}
-                      bold={false}
-                      inputType={"number"}
-                      loading={loading}
-                      id={allow.id}
-                      type="allowance"
-                      setLoading={setLoading}
-                    />
-                  </div>
-                ))}
+                {data?.allowances.map(
+                  (allow: IndividualAllowanceTypes, index: any) => (
+                    <div key={index} className=" px-5 ">
+                      <ClickableField
+                        label={allow?.AllowanceNames?.Name}
+                        text={allow?.Amount}
+                        cap={false}
+                        bold={false}
+                        inputType={"number"}
+                        loading={loading}
+                        id={allow.id}
+                        type="allowance"
+                        setLoading={setLoading}
+                      />
+                    </div>
+                  )
+                )}
 
                 <div className=" py-2 px-5 rounded-t-xl border-t border-slate-500 shadow-md">
                   <TextWithLabel

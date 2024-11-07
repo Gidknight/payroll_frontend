@@ -1,33 +1,33 @@
-import { ImProfile } from 'react-icons/im'
+import { ImProfile } from "react-icons/im";
 
-import ChangeUsername from './details/ChangeUsername'
+import ChangeUsername from "./details/ChangeUsername";
 
-import UserDetail from './details/UserDetail'
-import UserAddress from './details/UserAddress'
-import { useEffect, useState } from 'react'
-import { getSingleUser } from '@renderer/utils/requests'
-import { User } from '@renderer/types'
+import UserDetail from "./details/UserDetail";
+import UserAddress from "./details/UserAddress";
+import { useEffect, useState } from "react";
+import { User } from "../../types";
+import { axiosInstance } from "../../libs";
 
 const ChangeAccountDetailsForm = ({ user_id }: { user_id: string }) => {
-  const [user, setUser] = useState<User | null>(null)
-  const [, setLoading] = useState(false)
+  const [user, setUser] = useState<User | null>(null);
+  const [, setLoading] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setLoading(true)
-        const response = await getSingleUser(user_id)
+        setLoading(true);
+        const response = await axiosInstance.get("/user/" + user_id);
         // console.log(response.data)
         // console.log({ _store, _user })
         // console.log(response.data.data)
-        setUser(response?.data?.data)
+        setUser(response?.data?.data);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
-    fetchData()
-  }, [])
+    };
+    fetchData();
+  }, []);
   return (
     <div className="w-full bg-white p-2 shadow-lg border-t-4 border-live">
       <div className="flex flex-row items-center justify-between">
@@ -37,19 +37,19 @@ const ChangeAccountDetailsForm = ({ user_id }: { user_id: string }) => {
         </div>
       </div>
       <div className="w-full flex flex-col items-start justify-normal gap-5 p-5">
-        {user?.user_name && <ChangeUsername value={user?.user_name || ''} />}
+        {user?.user_name && <ChangeUsername value={user?.user_name || ""} />}
 
-        {(String(user?.contact) == '' || user?.contact) && (
+        {(String(user?.contact) == "" || user?.contact) && (
           <UserDetail
             inputType="number"
             title="Phone Contact"
             user_id={user_id}
-            value={user?.contact || ''}
+            value={user?.contact || ""}
             subText="A valid phone number"
           />
         )}
 
-        {(String(user?.email) == '' || user?.email) && (
+        {(String(user?.email) == "" || user?.email) && (
           <UserDetail
             inputType="email"
             title="Email Address"
@@ -57,7 +57,7 @@ const ChangeAccountDetailsForm = ({ user_id }: { user_id: string }) => {
             value={user?.email}
           />
         )}
-        {(String(user?.first_name) == '' || user?.first_name) && (
+        {(String(user?.first_name) == "" || user?.first_name) && (
           <UserDetail
             inputType="text"
             title="First Name"
@@ -65,7 +65,7 @@ const ChangeAccountDetailsForm = ({ user_id }: { user_id: string }) => {
             value={user?.first_name}
           />
         )}
-        {(String(user?.last_name) == '' || user?.last_name) && (
+        {(String(user?.last_name) == "" || user?.last_name) && (
           <UserDetail
             inputType="text"
             title="Last Name"
@@ -73,7 +73,7 @@ const ChangeAccountDetailsForm = ({ user_id }: { user_id: string }) => {
             value={user?.last_name}
           />
         )}
-        {(String(user?.other_name) == '' || user?.other_name) && (
+        {(String(user?.other_name) == "" || user?.other_name) && (
           <UserDetail
             inputType="text"
             title="Other Name"
@@ -82,12 +82,16 @@ const ChangeAccountDetailsForm = ({ user_id }: { user_id: string }) => {
           />
         )}
 
-        {(String(user?.address) == '' || user?.address) && (
-          <UserAddress title="Home Address" user_id={user_id} value={user?.address} />
+        {(String(user?.address) == "" || user?.address) && (
+          <UserAddress
+            title="Home Address"
+            user_id={user_id}
+            value={user?.address}
+          />
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ChangeAccountDetailsForm
+export default ChangeAccountDetailsForm;

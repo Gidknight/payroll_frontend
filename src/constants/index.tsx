@@ -7,9 +7,9 @@ import {
   BiUser,
 } from "react-icons/bi";
 import { BsBank, BsPeopleFill, BsPersonAdd, BsPostage } from "react-icons/bs";
-import { FaBalanceScale } from "react-icons/fa";
+import { FaBalanceScale, FaUserMd } from "react-icons/fa";
 import { GiOfficeChair } from "react-icons/gi";
-import { GrCurrency, GrHostMaintenance } from "react-icons/gr";
+import { GrAddCircle, GrCurrency, GrHostMaintenance } from "react-icons/gr";
 import {
   MdDashboard,
   MdEmail,
@@ -17,8 +17,9 @@ import {
   MdReceiptLong,
   MdSettings,
   MdTitle,
+  MdUploadFile,
 } from "react-icons/md";
-import { RiAdminFill, RiBankCardLine } from "react-icons/ri";
+import { RiAdminFill, RiBankCardLine, RiSwitchFill } from "react-icons/ri";
 import { PageTypes } from "../types";
 
 export const CURRENCY = "NGN";
@@ -298,7 +299,7 @@ export const NAV_LINKS = [
   {
     id: 7,
     title: "Administration",
-    link: "/administration-settings",
+    link: "/administration-settings/register",
     icon: <RiAdminFill />,
     hasSub: false,
   },
@@ -336,5 +337,34 @@ export const SALARY_CONFIG_PAGES: PageTypes[] = [
     title: "Deduction",
     icon: <BiTrendingDown />,
     to: "/deductions-configuration",
+  },
+];
+
+export const ADMIN_SETTINGS_PAGES: PageTypes[] = [
+  {
+    id: 1,
+    title: "Register",
+    icon: <FaUserMd />,
+    to: "/administration-settings/register",
+  },
+
+  {
+    id: 2,
+    title: "Upload Allowances",
+    icon: <MdUploadFile />,
+    to: "/administration-settings/upload-allowances",
+  },
+
+  {
+    id: 3,
+    title: "Upload Deductions",
+    icon: <MdUploadFile />,
+    to: "/administration-settings/upload-deductions",
+  },
+  {
+    id: 4,
+    title: "Switch Month",
+    icon: <RiSwitchFill />,
+    to: "/administration-settings/switch-month",
   },
 ];

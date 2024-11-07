@@ -13,6 +13,7 @@ export interface AccountTypes {
   pension_acct_name: string | null;
   pension_acct_no: string | null;
   dated_on_id: number;
+  Name: string;
 }
 
 export interface SalaryScaleTypes {
@@ -52,32 +53,27 @@ export interface JobsTypes {
 
 export interface AllowanceTypes {
   id: number;
-  NameId: number;
-  IndividualId: number;
-  Amount: number;
-  DatedOnId: number;
-  AllowanceNames: {
-    id: number;
-    Name: string;
-    AccountName: string | null;
-    AccountNumber: string | null;
-    Codes: string | null;
-  };
+  Name: string;
+  AccountName: string | null;
+  AccountNumber: string | null;
+  Codes: string | null;
 }
-
-export interface DeductionTypes {
+export interface IndividualAllowanceTypes {
   id: number;
   NameId: number;
   IndividualId: number;
   Amount: number;
   DatedOnId: number;
-  DeductionNames: {
-    id: number;
-    Name: string;
-    AccountName: string | null;
-    AccountNumber: string | null;
-    Codes: string | null;
-  };
+  AllowanceNames: AccountTypes;
+}
+
+export interface IndividualDeductionTypes {
+  id: number;
+  NameId: number;
+  IndividualId: number;
+  Amount: number;
+  DatedOnId: number;
+  DeductionNames: AllowanceTypes;
 }
 
 export interface StaffDetailsTypes {
@@ -93,8 +89,8 @@ export interface StaffDetailsTypes {
   dob: any;
   account: AccountTypes;
   jobs: JobsTypes;
-  allowances: AllowanceTypes[];
-  deductions: DeductionTypes[];
+  allowances: IndividualAllowanceTypes[];
+  deductions: IndividualDeductionTypes[];
   total_allowance: number;
   total_deduction: number;
   payable_amount: number;
@@ -122,6 +118,14 @@ export interface PageTypes {
   title: string;
   to: string;
   icon: any;
+}
+
+export interface DatedOnTypes {
+  id: number;
+  Month: string;
+  Year: number;
+  Dated: number;
+  Status?: string;
 }
 export interface UserIDType {
   user_id: string;

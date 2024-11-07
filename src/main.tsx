@@ -22,7 +22,6 @@ import StaffEditAccountDetailsPage from "./pages/StaffEditAccountDetailsPage";
 import StaffEditBiodataPage from "./pages/StaffEditBiodataPage";
 import SalaryConfigPage from "./pages/SalaryConfigPage";
 import MyProfilePage from "./pages/MyProfilePage";
-import AdministrationPage from "./pages/AdministarionPage";
 import PayslipSendPage from "./pages/PayslipSendPage";
 import PayslipStatsPage from "./pages/PayslipStatsPage";
 import ReportMasterPage from "./pages/reports/ReportMasterPage";
@@ -42,6 +41,10 @@ import ReportVariationPage from "./pages/reports/ReportVariationPage";
 import AllOverlays from "./components/overlays/AllOverlays";
 import AllowanceConfigPage from "./pages/AllowanceConfigPage";
 import DeductionConfigPage from "./pages/DeductionConfigPage";
+import RegisterPage from "./pages/administration/RegisterPage";
+import UploadAllowancesPage from "./pages/administration/UploadAllowancesPage";
+import UploadDeductionsPage from "./pages/administration/UploadDeductionsPage";
+import SwitchMonthPage from "./pages/administration/SwitchMonthPage";
 
 const router = createBrowserRouter([
   {
@@ -125,8 +128,20 @@ const router = createBrowserRouter([
     element: <MyProfilePage />,
   },
   {
-    path: "/administration-settings",
-    element: <AdministrationPage />,
+    path: "/administration-settings/register",
+    element: <RegisterPage />,
+  },
+  {
+    path: "/administration-settings/upload-allowances",
+    element: <UploadAllowancesPage />,
+  },
+  {
+    path: "/administration-settings/upload-deductions",
+    element: <UploadDeductionsPage />,
+  },
+  {
+    path: "/administration-settings/switch-month",
+    element: <SwitchMonthPage />,
   },
   {
     path: "/payslip/send-payslip",

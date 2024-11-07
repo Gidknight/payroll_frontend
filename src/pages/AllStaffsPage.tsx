@@ -13,10 +13,11 @@ const AllStaffsPage = () => {
         "http://localhost:5000/api/v1/staffs"
       );
       if (response?.status == 200) {
-        console.log(response);
+        // console.log(response);
         setStaffs(response?.data);
       }
     } catch (error) {
+      console.log(error);
     } finally {
       setLoading(false);
     }

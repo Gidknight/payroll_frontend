@@ -1,5 +1,10 @@
 import Layout from "../layout";
-import { Header, BackBTN } from "../components";
+import {
+  Header,
+  BackBTN,
+  ChangeAccountDetailsForm,
+  ChangePasswordForm,
+} from "../components";
 // import BackBTN from "../components/BackBTN";
 // import NewStaffForm from "../components/forms/NewStaffForm";
 
@@ -11,7 +16,9 @@ const MyProfilePage = () => {
         <div>
           <BackBTN />
         </div>
-        <div className="w-full bg-white p-2 shadow-lg border-t-4 border-live"></div>
+
+        <ChangeAccountDetailsForm user_id="oi" />
+        <ChangePasswordForm user_id="0io" />
       </main>
     </Layout>
   );

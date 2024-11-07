@@ -3,7 +3,8 @@ import { PrimaryButton, TextInput } from "..";
 import { BiLock } from "react-icons/bi";
 import { ShowErrorObject } from "../../types";
 import toast from "react-hot-toast";
-import { changePassword } from "@renderer/utils/requests";
+import { axiosInstance } from "../../libs";
+// import { changePassword } from "@renderer/utils/requests";
 
 const ChangePasswordForm = ({ user_id }: { user_id: string }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -59,7 +60,7 @@ const ChangePasswordForm = ({ user_id }: { user_id: string }) => {
     if (isError) return;
     try {
       setIsLoading(true);
-      const response = await changePassword({
+      const response = await axiosInstance.post("/user/security/password", {
         user_id,
         currentPassword,
         newPassword,

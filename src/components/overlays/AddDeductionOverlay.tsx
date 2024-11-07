@@ -53,9 +53,9 @@ const AddDeductionOverlay = ({ user_id }: { user_id?: string }) => {
         //   window.location.reload();
         // }, 500);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
-      toast.error("Error Adding Deduction");
+      toast.error(error?.response?.data?.message);
     } finally {
       setLoading(false);
     }
