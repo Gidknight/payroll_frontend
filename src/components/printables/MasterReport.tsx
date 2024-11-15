@@ -136,10 +136,10 @@ const MasterReport = ({ data }: { data: MasterReportTypes | null }) => {
                       <td></td>
                       <td></td>
                       <td></td>
+                      <td></td>
                       <td className="text-nowrap font-bold text-center py-2 underline underline-offset-1">
                         {department[0]}
                       </td>
-                      <td></td>
                       <td></td>
                       <td></td>
                       <td className="report-th">

@@ -12,6 +12,7 @@ const UploadAllowancesPage = () => {
   const [CSV, setCSV] = useState(null);
   const [csvData, setCsvData] = useState([]);
   const [stat, setStat] = useState<UploadStatTypes | null>(null);
+  const [failure, setFailure] = useState(false);
   // console.log(csvData);
 
   const handleUpload = async () => {
@@ -41,7 +42,12 @@ const UploadAllowancesPage = () => {
   const handleReset = () => {
     setCSV(null);
     setCsvData([]);
+    window.location.reload();
   };
+
+  // const showFailures =()=>{
+  //   setS
+  // }
   return (
     <PageLayout
       loading={loading}
@@ -118,18 +124,42 @@ const UploadAllowancesPage = () => {
       )}
 
       {stat && (
-        <div className="w-full bg-white p-2 shadow-lg border-t-4 border-live">
-          <h1>Statistics</h1>
-          <div>
-            <h2>
+        <div className="w-full flex flex-col items-center justify-center bg-white p-2 shadow-lg border-t-4 border-live">
+          <div className=" w-1/2 mx-auto p-4 space-y-2 ring-2 rounded-md font-bold text-lg my-5">
+            <h1 className="text-center font-bold text-xl uppercase">
+              Statistics
+            </h1>
+            <h2 className="">
               Total: <span>{stat?.total}</span>
             </h2>
-            <h2>
-              Successes: <span>{stat?.success}</span>
+            <h2 className="text-live">
+              Success: <span>{stat?.success}</span>
             </h2>
-            <h2>
-              Failures: <span>{stat?.failures?.length}</span>
-            </h2>
+            <div>
+              <div
+                className={`flex flex-row items-center justify-start ${
+                  stat.failures.length > 0
+                    ? "text-error hover:shadow-lg hover:ring-1 cursor-pointer"
+                    : "text-slate-800"
+                } `}
+              >
+                <h2 className={""} onClick={() => setFailure((prev) => !prev)}>
+                  Failures: <span>{stat?.failures?.length}</span>
+                </h2>
+                {/* <button>{">"}</button> */}
+              </div>
+              {failure && (
+                <div className="p-2 bg-red-50 border-x-2 border-b-2 border-error rounded-md">
+                  {stat.failures.map((failed, findx) => (
+                    <div key={findx}>
+                      <h1 className="text-lg">
+                        Staff Number: {failed.staff_number}
+                      </h1>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}

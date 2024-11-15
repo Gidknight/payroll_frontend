@@ -16,6 +16,7 @@ import { BATCH_LIMIT } from "../constants";
 import { GrRefresh } from "react-icons/gr";
 import { MdEmail, MdTry } from "react-icons/md";
 import { GiReloadGunBarrel } from "react-icons/gi";
+import { axiosInstance } from "../libs";
 
 interface QueueTypes {
   awaiting: StaffTypes[];
@@ -26,7 +27,7 @@ interface QueueTypes {
 
 export interface StaffTypes {
   id: number;
-  staff_no: string;
+  Name: string;
 }
 const SendBatchComponent = () => {
   // const setIsSendingBatch = useGeneralStore((state) => state.setIsSendingBatch);
@@ -71,10 +72,12 @@ const SendBatchComponent = () => {
     try {
       setIsLoading(true);
       setWhatsGoingOn("Queuing the recipients");
-      const queue = await prepareQueue();
-      setTotalQueue(queue);
-      console.log(queue);
-      setPrepared(true);
+      const response = await axiosInstance.get("/payslip");
+      if (response.status == 200) {
+        setTotalQueue(response.data);
+        // console.log(response);
+        setPrepared(true);
+      }
     } catch (error) {
       console.log(error);
       toast.error("Error Queuing");
@@ -189,31 +192,41 @@ const SendBatchComponent = () => {
                         {totalQueue?.sent?.length}
                       </span>
                     </h3>
-
+                    {/* 
                     {totalQueue?.sent?.length > 0 && (
                       <ComboBox
-                        options={totalQueue.sent.map((staff) => staff.staff_no)}
+                        options={totalQueue.sent}
                         isDisabled={false}
                         id="sent_emails"
-                        isError={false}
+                        // isError={false}
+                        label="Sent Emails"
+                        subLabel={totalQueue?.sent?.length?.toLocaleString(
+                          "use-EN"
+                        )}
+                        onSelect={() => {}}
                       />
-                    )}
+                    )} */}
                   </div>
                   <div className="flex flex-row items-center justify-start">
-                    <h3 className="whitespace-nowrap">
+                    {/* <h3 className="whitespace-nowrap">
                       Emails Remaining:{" "}
                       <span className="font-semibold ">
                         {totalQueue?.awaiting?.length}
                       </span>
-                    </h3>
+                    </h3> */}
                     {totalQueue?.awaiting?.length > 0 && (
                       <ComboBox
-                        options={totalQueue.awaiting.map(
-                          (staff) => staff.staff_no
-                        )}
+                        options={totalQueue.awaiting}
                         isDisabled={false}
                         id="not_sent_emails"
-                        isError={false}
+                        label={`Emails Remaining`}
+                        subLabel={
+                          totalQueue?.awaiting?.length?.toLocaleString(
+                            "us-EN"
+                          ) + " Emails"
+                        }
+                        onSelect={() => {}}
+                        showDefault={false}
                       />
                     )}
                   </div>
@@ -234,12 +247,12 @@ const SendBatchComponent = () => {
                     </h3>
                     {totalQueue?.failed_emails?.length > 0 && (
                       <ComboBox
-                        options={totalQueue.failed_emails.map(
-                          (staff) => staff.staff_no
-                        )}
+                        options={totalQueue.failed_emails}
                         isDisabled={false}
                         id="failed_emails"
-                        isError={true}
+                        // isError={true}
+                        label=""
+                        onSelect={() => {}}
                       />
                     )}
                   </div>

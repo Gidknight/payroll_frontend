@@ -171,7 +171,7 @@ export interface MasterReportTypes {
 export interface UploadStatTypes {
   total: number;
   success: number;
-  failures: { id: number; staff_no: string }[];
+  failures: { id: number; staff_number: string }[];
 }
 export interface UserIDType {
   user_id: string;
