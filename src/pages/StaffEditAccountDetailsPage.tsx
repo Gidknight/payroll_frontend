@@ -1,4 +1,10 @@
-import { ComboBox, PrimaryButton, TextInputWithLabel } from "../components";
+import {
+  ComboBox,
+  ErrorCard,
+  LoadingComponent,
+  PrimaryButton,
+  TextInputWithLabel,
+} from "../components";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { axiosInstance } from "../libs";
@@ -113,7 +119,9 @@ const StaffEditAccountDetailsPage = () => {
       staffNo={staff?.staff_no || ""}
     >
       <div className="w-full ">
-        {staff ? (
+        {loading ? (
+          <LoadingComponent loading={loading} message="Fetching Account Data" />
+        ) : !loading && staff ? (
           <div className="w-full border-live border-t-4 bg-white flex flex-col items-center justify-start p-5">
             <h1 className="header-text text-center pb-5">
               Edit Account Details Form
@@ -187,7 +195,7 @@ const StaffEditAccountDetailsPage = () => {
             </form>
           </div>
         ) : (
-          <p className="text-center">No Data To Display</p>
+          <ErrorCard errorMessage="No Data To Display" />
         )}
       </div>
     </StaffLayout>

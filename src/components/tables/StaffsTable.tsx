@@ -8,7 +8,7 @@ import { BiLoaderCircle } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
 const columns: GridColDef[] = [
-  { field: "id", headerName: "S/N", width: 50 },
+  // { field: "id", headerName: "S/N", width: 50 },
   { field: "staff_no", headerName: "Staff Number", width: 80 },
   {
     field: "title",
@@ -20,7 +20,7 @@ const columns: GridColDef[] = [
 
   {
     field: "surname",
-    headerName: "SurName",
+    headerName: "Surname",
     type: "string",
     width: 120,
     editable: false,
@@ -32,13 +32,13 @@ const columns: GridColDef[] = [
     width: 120,
     editable: false,
   },
-  {
-    field: "other_name",
-    headerName: "Other Names",
-    type: "string",
-    width: 120,
-    editable: false,
-  },
+  // {
+  //   field: "other_name",
+  //   headerName: "Other Names",
+  //   type: "string",
+  //   width: 120,
+  //   editable: false,
+  // },
   {
     field: "email_address",
     headerName: "Email Address",

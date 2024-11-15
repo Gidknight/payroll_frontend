@@ -9,7 +9,12 @@ import {
 import { BsBank, BsPeopleFill, BsPersonAdd, BsPostage } from "react-icons/bs";
 import { FaBalanceScale, FaUserMd } from "react-icons/fa";
 import { GiOfficeChair } from "react-icons/gi";
-import { GrAddCircle, GrCurrency, GrHostMaintenance } from "react-icons/gr";
+import {
+  GrAddCircle,
+  GrCurrency,
+  GrHostMaintenance,
+  GrOrganization,
+} from "react-icons/gr";
 import {
   MdDashboard,
   MdEmail,
@@ -49,6 +54,21 @@ export const GENDER_OPTIONS = [
   { id: "MALE", Name: "MALE" },
   { id: "FEMALE", Name: "FEMALE" },
   { id: "", Name: "Rather Not Say" },
+];
+
+export const ALL_MONTHS = [
+  { id: "JANUARY", Name: "JANUARY" },
+  { id: "FEBRUARY", Name: "FEBRUARY" },
+  { id: "MARCH", Name: "MARCH" },
+  { id: "APRIL", Name: "APRIL" },
+  { id: "MAY", Name: "MAY" },
+  { id: "JUNE", Name: "JUNE" },
+  { id: "JULY", Name: "JULY" },
+  { id: "AUGUST", Name: "AUGUST" },
+  { id: "SEPTEMBER", Name: "SEPTEMBER" },
+  { id: "OCTOBER", Name: "OCTOBER" },
+  { id: "NOVEMBER", Name: "NOVEMBER" },
+  { id: "DECEMBER", Name: "DECEMBER" },
 ];
 
 export const JOB_LEVELS = [
@@ -366,5 +386,11 @@ export const ADMIN_SETTINGS_PAGES: PageTypes[] = [
     title: "Switch Month",
     icon: <RiSwitchFill />,
     to: "/administration-settings/switch-month",
+  },
+  {
+    id: 5,
+    title: "Org. Setup",
+    icon: <GrOrganization />,
+    to: "/administration-settings/organization-setup",
   },
 ];

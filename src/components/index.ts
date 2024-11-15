@@ -22,6 +22,7 @@ export { default as ErrorCard } from "./ErrorCard.tsx";
 export { default as BackBTN } from "./BackBTN.tsx";
 export { default as SideBar } from "./SideBar.tsx";
 export { default as Topbar } from "./Topbar.tsx";
+export { default as LoadingComponent } from "./LoadingComponent.tsx";
 
 //
 export { default as PrimaryButton } from "./PrimaryButton.tsx";
@@ -64,7 +65,7 @@ export { default as DashboardGraph } from "./charts/DashboardGraph.tsx";
 
 // Printables
 // export { default as SalesDetail } from "./printables/SalesDetail.tsx";
-// export { default as InventoryReport } from "./printables/InventoryReport.tsx";
+export { default as MasterReport } from "./printables/MasterReport.tsx";
 // export { default as SalesReport } from "./printables/SalesReport.tsx";
 // export { default as CreditsReport } from "./printables/CreditsReport.tsx";
 // export { default as PaymentReport } from "./printables/PaymentReport.tsx";

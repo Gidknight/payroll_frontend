@@ -1,5 +1,7 @@
 import {
   ComboBox,
+  ErrorCard,
+  LoadingComponent,
   PrimaryButton,
   SecondaryButton,
   TextInputWithLabel,
@@ -151,7 +153,9 @@ const StaffEditBiodataPage = () => {
       staffNo={staff?.staff_no || ""}
     >
       <div className="w-full ">
-        {staff ? (
+        {loading ? (
+          <LoadingComponent loading={loading} message="Fetching Bio Data" />
+        ) : !loading && staff ? (
           <div className="w-full border-live border-t-4 bg-white flex flex-col items-center justify-start p-5">
             <h1 className="header-text text-center pb-5">Edit Staff Biodata</h1>
 
@@ -289,7 +293,7 @@ const StaffEditBiodataPage = () => {
             </form>
           </div>
         ) : (
-          <p className="text-center">No Data To Display</p>
+          <ErrorCard errorMessage="No Data To Display" />
         )}
       </div>
     </StaffLayout>

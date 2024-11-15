@@ -1,5 +1,11 @@
 import Layout from "../layout";
-import { BackBTN, Header, InpageLink } from "../components";
+import {
+  BackBTN,
+  ErrorCard,
+  Header,
+  InpageLink,
+  LoadingComponent,
+} from "../components";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { axiosInstance } from "../libs";
@@ -94,10 +100,13 @@ const StaffDetailsPage = () => {
         </div> */}
 
       <div className="w-full ">
-        {staff ? (
+        {loading ? (
+          <LoadingComponent loading={loading} message="Fetching Data" />
+        ) : !loading && staff ? (
           <StaffData data={staff} />
         ) : (
-          <p className="text-center">No Data To Display</p>
+          // <p className="text-center">No Data To Display</p>
+          <ErrorCard errorMessage="No Data To Display" />
         )}
       </div>
       {/* </main> */}

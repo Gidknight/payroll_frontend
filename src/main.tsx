@@ -45,6 +45,7 @@ import RegisterPage from "./pages/administration/RegisterPage";
 import UploadAllowancesPage from "./pages/administration/UploadAllowancesPage";
 import UploadDeductionsPage from "./pages/administration/UploadDeductionsPage";
 import SwitchMonthPage from "./pages/administration/SwitchMonthPage";
+import OrgSetupPage from "./pages/administration/OrgSetupPage";
 
 const router = createBrowserRouter([
   {
@@ -128,20 +129,30 @@ const router = createBrowserRouter([
     element: <MyProfilePage />,
   },
   {
-    path: "/administration-settings/register",
-    element: <RegisterPage />,
-  },
-  {
-    path: "/administration-settings/upload-allowances",
-    element: <UploadAllowancesPage />,
-  },
-  {
-    path: "/administration-settings/upload-deductions",
-    element: <UploadDeductionsPage />,
-  },
-  {
-    path: "/administration-settings/switch-month",
-    element: <SwitchMonthPage />,
+    path: "/administration-settings",
+    children: [
+      {
+        path: "/administration-settings/register",
+        element: <RegisterPage />,
+      },
+
+      {
+        path: "/administration-settings/upload-allowances",
+        element: <UploadAllowancesPage />,
+      },
+      {
+        path: "/administration-settings/upload-deductions",
+        element: <UploadDeductionsPage />,
+      },
+      {
+        path: "/administration-settings/switch-month",
+        element: <SwitchMonthPage />,
+      },
+      {
+        path: "/administration-settings/organization-setup",
+        element: <OrgSetupPage />,
+      },
+    ],
   },
   {
     path: "/payslip/send-payslip",

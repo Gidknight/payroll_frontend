@@ -68,11 +68,11 @@
 }
 
 .report-th {
-  @apply border border-gray-300 px-4 py-2;
+  @apply border border-gray-800 px-1  py-2;
 }
 
 .report-td {
-  @apply border border-gray-300 px-4 py-2;
+  @apply border border-gray-800 px-1  py-2 text-[11px];
 }
 
 .background-animate {

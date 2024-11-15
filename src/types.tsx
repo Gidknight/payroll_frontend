@@ -127,6 +127,52 @@ export interface DatedOnTypes {
   Dated: number;
   Status?: string;
 }
+
+export interface ReportType {
+  id: number;
+  staff_no: string;
+  full_names: string;
+  level: string;
+  bank: string;
+  unit: string;
+  subunit: string;
+  allowances: { name: string; amount: number }[];
+  deductions: { name: string; amount: number }[];
+  basic_salary: number;
+  total_allowance: number;
+  total_deductions: number;
+  payable_month: number;
+  total_month: number;
+  gross_pay: number;
+  net_pay: number;
+}
+export interface MasterReportTypes {
+  title: string;
+  date: { Month: string; Year: Number };
+  organization: {
+    OrganisationName: string;
+    OrganisationAddress: string;
+    OtherInfo1?: string;
+    OtherInfo2?: string;
+  };
+  summations: {
+    total_allowance: number;
+    total_deduction: number;
+    total_basic: number;
+    total_gross: number;
+    total_netpay: number;
+    no_of_staff: number;
+  };
+  available_allowances: { name: string; total: number }[];
+  available_deductions: { name: string; total: number }[];
+  report: ReportType[][];
+}
+
+export interface UploadStatTypes {
+  total: number;
+  success: number;
+  failures: { id: number; staff_no: string }[];
+}
 export interface UserIDType {
   user_id: string;
 }

@@ -1,10 +1,11 @@
-import { ADMIN_SETTINGS_PAGES } from "../../constants";
+import { ADMIN_SETTINGS_PAGES, ALL_MONTHS } from "../../constants";
 import PageLayout from "../../layouts/PageLayout";
 import { useEffect, useState } from "react";
 import { axiosInstance } from "../../libs";
 import { DatedOnTypes } from "../../types";
-import { PrimaryButton } from "../../components";
+import { ComboBox, PrimaryButton } from "../../components";
 import toast from "react-hot-toast";
+import moment from "moment";
 
 interface MonthSwitcherTypes {
   options: DatedOnTypes[];
@@ -101,12 +102,17 @@ const MonthSwitcher = ({
 //////////////////////////////////////////////////////////////////////////////////
 
 const SwitchMonthPage = () => {
+  const this_year = moment().year();
   const [loading, setLoading] = useState(false);
   const [availableMonths, setAvailableMonths] = useState<DatedOnTypes[] | []>(
     []
   );
   const [currentMonth, setCurrentMonth] = useState<DatedOnTypes | null>(null);
   const [oldMonth, setOldMonth] = useState<DatedOnTypes | null>(null);
+  const [newMonth, setNewMonth] = useState("");
+  const [newYear, setNewYear] = useState("");
+  const [months, setMonths] = useState([]);
+  const [years, setYears] = useState([]);
 
   const handleMonthSwitch = async () => {
     try {
@@ -141,7 +147,9 @@ const SwitchMonthPage = () => {
         const response = await axiosInstance.get("/administration/month");
         if (response.status == 200) {
           const data: DatedOnTypes[] = response.data;
+          const now = new Date();
           setAvailableMonths(data);
+
           const current: DatedOnTypes | undefined = data.find(
             (date) => date.Status === "Current"
           );
@@ -150,6 +158,7 @@ const SwitchMonthPage = () => {
             setOldMonth(current);
           }
         }
+
         return false;
       } catch (error) {
         console.log(error);
@@ -166,7 +175,7 @@ const SwitchMonthPage = () => {
       subtext="Switch Working Month"
       pages={ADMIN_SETTINGS_PAGES}
     >
-      <div className="w-full flex flex-row items-center justify-evenly gap-5">
+      <div className="w-full flex flex-row items-start justify-evenly gap-5">
         <div
           className={`w-1/2 flex flex-row items-center justify-around bg-white p-2 shadow-lg border-t-4 ${
             availableMonths.length > 0 ? "border-live" : "border-secondary"
@@ -200,6 +209,27 @@ const SwitchMonthPage = () => {
           }`}
         >
           <h2>Add Next Month</h2>
+          <div className="flex felex-row items-center justify-evenly w-full">
+            <ComboBox
+              label="New Month"
+              options={ALL_MONTHS}
+              onSelect={setNewMonth}
+              value={newMonth}
+              defaultMessage="Select A Month"
+              isDisabled={loading}
+            />
+            <ComboBox
+              label="New Year"
+              options={[
+                { id: this_year, Name: this_year },
+                { id: this_year + 1, Name: this_year + 1 },
+              ]}
+              onSelect={setNewYear}
+              value={newYear}
+              defaultMessage="Select New Year"
+              isDisabled={loading}
+            />
+          </div>
           <div className="py-2">
             <PrimaryButton
               isLoading={loading}

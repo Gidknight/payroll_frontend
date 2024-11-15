@@ -23,21 +23,21 @@ const AllowDeductTable = ({
       field: "Name",
       headerName: "Name",
       type: "string",
-      width: 180,
+      width: 150,
       sortable: true,
     },
     {
       field: "Codes",
       headerName: "code",
       type: "string",
-      width: 120,
+      width: 80,
       sortable: true,
     },
 
     {
       field: "",
       headerName: "action",
-      width: 80,
+      width: 70,
       //   sortable: false,
       renderCell: (params: any) => {
         return (

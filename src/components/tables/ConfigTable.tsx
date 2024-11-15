@@ -16,21 +16,21 @@ const ConfigTable = ({
       field: "id",
       headerName: "ID",
       type: "number",
-      width: 100,
+      width: 80,
       sortable: true,
     },
     {
       field: "Name",
       headerName: "Name",
       type: "string",
-      width: 200,
+      width: 170,
       sortable: true,
     },
 
     {
       field: "more",
       headerName: "",
-      width: 100,
+      width: 80,
       //   sortable: false,
       renderCell: (params: any) => {
         return (
