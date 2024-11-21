@@ -1,3 +1,3 @@
-staff_number,deduction_ids,amount
-AKY82956,7 : 8 : 9 : 10,1123 : 4567 : 4345 : 347.48
-AKY20390,2 : 4 : 7 : 9,1000 : 3467 : 8954 : 6780
+staff_number,deduction_names,amount
+AKY82956,nasu welfare : nannm : nasu deduction : health alld cics,1123 : 4567 : 4345 : 347.48
+AKY20390,tax : dr.welf.sch : health info mgt : nannm car loan,1000 : 3467 : 8954 : 6780

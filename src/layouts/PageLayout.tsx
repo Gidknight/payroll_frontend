@@ -34,8 +34,10 @@ const PageLayout = ({
             <main className="wrapper">
               <Header location={`${location}`} subtext={`${subtext}`} />
               <div className="flex flex-row items-center justify-between w-full">
-                <BackBTN />
-                <div className="flex flex-row items-center justify-center gap-5">
+                <div className="mr-5">
+                  <BackBTN />
+                </div>
+                <div className="flex flex-row items-center justify-end flex-wrap gap-2">
                   {pages.length > 0 &&
                     pages?.map((page: PageTypes) => (
                       <div key={page.id}>

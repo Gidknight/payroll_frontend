@@ -13,6 +13,7 @@ import { axiosInstance } from "../../libs";
 import { TitleTypes } from "../../types";
 import { useParams } from "react-router-dom";
 import { BiTrendingUp } from "react-icons/bi";
+import { AUTOMATED_ALLOWANCES } from "../../constants";
 
 const AddAllowanceOverlay = ({ user_id }: { user_id?: string }) => {
   const [loading, setLoading] = useState(false);
@@ -43,6 +44,7 @@ const AddAllowanceOverlay = ({ user_id }: { user_id?: string }) => {
         amount,
         individual_id: activeStaff?.id,
         name_id: allowance?.id,
+        name: allowance?.Name,
       });
       if (response.status == 201) {
         toast.success(response.data.message);
@@ -127,7 +129,11 @@ const AddAllowanceOverlay = ({ user_id }: { user_id?: string }) => {
                 placeholder={`Amount Is Required`}
                 string={amount}
                 isRequired={true}
-                isDisabled={loading}
+                isDisabled={
+                  (allowance &&
+                    AUTOMATED_ALLOWANCES.includes(allowance?.Name)) ||
+                  loading
+                }
                 error=""
               />
               {/* </div> */}
@@ -137,7 +143,7 @@ const AddAllowanceOverlay = ({ user_id }: { user_id?: string }) => {
                   title="submit"
                   cusFunc={() => {}}
                   isLoading={loading}
-                  isLock={allowance?.id && amount > 0 ? false : true}
+                  isLock={allowance?.id ? false : true}
                 />
               </div>
             </form>

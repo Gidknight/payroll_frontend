@@ -1,4 +1,4 @@
-import { TextInputCompTypes } from "@/app/types";
+import { TextInputCompTypes } from "../types";
 
 export default function TextInput({
   string,

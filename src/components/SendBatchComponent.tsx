@@ -17,6 +17,7 @@ import { GrRefresh } from "react-icons/gr";
 import { MdEmail, MdTry } from "react-icons/md";
 import { GiReloadGunBarrel } from "react-icons/gi";
 import { axiosInstance } from "../libs";
+import { useGeneralStore } from "../stores/general";
 
 interface QueueTypes {
   awaiting: StaffTypes[];
@@ -31,9 +32,9 @@ export interface StaffTypes {
 }
 const SendBatchComponent = () => {
   // const setIsSendingBatch = useGeneralStore((state) => state.setIsSendingBatch);
-  // const setIsDoneWithBatch = useGeneralStore(
-  //   (state) => state.setIsDoneWithBatch
-  // );
+  const setIsDoneWithBatch = useGeneralStore(
+    (state) => state.setIsDoneWithBatch
+  );
 
   const [totalQueue, setTotalQueue] = useState<QueueTypes>({
     awaiting: [],
@@ -155,7 +156,7 @@ const SendBatchComponent = () => {
     <>
       <div
         className={`
-                        relative bg-white w-full mx-3  mb-10
+                        relative bg-white w-full px-3  pb-10
                         
                     `}
       >
@@ -219,12 +220,10 @@ const SendBatchComponent = () => {
                         options={totalQueue.awaiting}
                         isDisabled={false}
                         id="not_sent_emails"
-                        label={`Emails Remaining`}
-                        subLabel={
-                          totalQueue?.awaiting?.length?.toLocaleString(
-                            "us-EN"
-                          ) + " Emails"
-                        }
+                        label={`Emails Remaining (${totalQueue?.awaiting?.length?.toLocaleString(
+                          "us-EN"
+                        )})`}
+                        // subLabel={+" Emails"}
                         onSelect={() => {}}
                         showDefault={false}
                       />

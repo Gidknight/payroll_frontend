@@ -14,6 +14,7 @@ import { TitleTypes } from "../../types";
 import { useParams } from "react-router-dom";
 
 import { BiTrendingDown } from "react-icons/bi";
+import { AUTOMATED_DEDUCTIONS } from "../../constants";
 
 const AddDeductionOverlay = ({ user_id }: { user_id?: string }) => {
   const params = useParams();
@@ -44,6 +45,7 @@ const AddDeductionOverlay = ({ user_id }: { user_id?: string }) => {
         amount,
         individual_id: activeStaff?.id,
         name_id: deduction?.id,
+        name: deduction?.Name,
       });
       if (response.status == 201) {
         toast.success(response.data.message);
@@ -128,7 +130,11 @@ const AddDeductionOverlay = ({ user_id }: { user_id?: string }) => {
                 placeholder={`Amount Is Required`}
                 string={amount}
                 isRequired={true}
-                isDisabled={loading}
+                isDisabled={
+                  (deduction &&
+                    AUTOMATED_DEDUCTIONS.includes(deduction?.Name)) ||
+                  loading
+                }
                 error=""
               />
               {/* </div> */}
@@ -138,7 +144,7 @@ const AddDeductionOverlay = ({ user_id }: { user_id?: string }) => {
                   title="submit"
                   cusFunc={() => {}}
                   isLoading={loading}
-                  isLock={deduction?.id && amount > 0 ? false : true}
+                  isLock={deduction?.id ? false : true}
                 />
               </div>
             </form>

@@ -2,23 +2,17 @@ import { Link } from "react-router-dom";
 import TextWithLabel from "./TextWithLabel";
 import { BiPrinter } from "react-icons/bi";
 import {
-  AllowanceTypes,
-  DeductionTypes,
   IndividualAllowanceTypes,
+  IndividualDeductionTypes,
   StaffDetailsTypes,
-  SubUnitTypes,
 } from "../types";
 import WebButton from "./WebButton";
 import { MdEmail } from "react-icons/md";
-import EditableField from "./EditableField";
-import { useEffect, useState } from "react";
-import EditableDatalist from "./EditableDatalist";
-import { JOB_LEVELS, JOB_STEPS } from "../constants";
+import { useState } from "react";
+
 import SecondaryButton from "./SecondaryButton";
 import ClickableField from "./ClickableField";
 import { useGeneralStore } from "../stores/general";
-import toast from "react-hot-toast";
-import { axiosInstance } from "../libs";
 
 const StaffData = ({
   data,
@@ -200,7 +194,7 @@ const StaffData = ({
                   (allow: IndividualAllowanceTypes, index: any) => (
                     <div key={index} className=" px-5 ">
                       <ClickableField
-                        label={allow?.AllowanceNames?.Name}
+                        label={allow?.AllowanceNames.Name}
                         text={allow?.Amount}
                         cap={false}
                         bold={false}
@@ -272,27 +266,29 @@ const StaffData = ({
               </div>
             </div>
 
-            {data?.deductions && data?.total_deduction > 0 ? (
+            {data?.deductions.length > 0 ? (
               <div className="space-y-1 bg-red-100">
                 <div className="w-full flex flex-row items-center justify-between pt-2 px-4 border-b-2 border-slate-500 text-lg text-slate-800 font-bold">
                   <p>Detail</p>
                   <p>Amount (NGN)</p>
                 </div>
-                {data?.deductions.map((deduct: DeductionTypes, index: any) => (
-                  <div key={index} className=" px-5 ">
-                    <ClickableField
-                      label={deduct?.DeductionNames?.Name}
-                      text={deduct?.Amount}
-                      cap={false}
-                      bold={false}
-                      id={deduct?.id || 0}
-                      inputType={"number"}
-                      loading={loading}
-                      setLoading={setLoading}
-                      type="deduction"
-                    />
-                  </div>
-                ))}
+                {data?.deductions.map(
+                  (deduct: IndividualDeductionTypes, index: any) => (
+                    <div key={index} className=" px-5 ">
+                      <ClickableField
+                        label={deduct?.DeductionNames.Name}
+                        text={deduct?.Amount}
+                        cap={false}
+                        bold={false}
+                        id={deduct?.id || 0}
+                        inputType={"number"}
+                        loading={loading}
+                        setLoading={setLoading}
+                        type="deduction"
+                      />
+                    </div>
+                  )
+                )}
                 <div className=" py-2 px-5 rounded-t-xl border-t border-slate-500 shadow-md">
                   <TextWithLabel
                     label="Total Deduction"

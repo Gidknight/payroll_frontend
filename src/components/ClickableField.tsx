@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { BiEdit, BiSave } from "react-icons/bi";
-import { MdClose, MdDelete } from "react-icons/md";
+import { MdClose, MdDelete, MdRestore } from "react-icons/md";
 import { axiosInstance } from "../libs";
 import toast from "react-hot-toast";
 import { FaSpinner } from "react-icons/fa";
+import { AUTOMATED_ALLOWANCES, AUTOMATED_DEDUCTIONS } from "../constants";
 
 const ClickableField = ({
   id,
@@ -85,6 +86,28 @@ const ClickableField = ({
     }
   };
 
+  const restoreDefault = async () => {
+    try {
+      setLoading(true);
+      let response;
+      if (type == "allowance") {
+        response = await axiosInstance.post("/individualAllowances/" + id);
+      } else if (type === "deduction") {
+        response = await axiosInstance.post("/individualDeductions/" + id);
+      }
+      if (response?.status == 201) {
+        toast.success(response.data.message);
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Error Occured");
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div>
       <div
@@ -114,6 +137,24 @@ const ClickableField = ({
       </div>
       {edit && (
         <div className="flex flex-row border-b-2 border-x-2 items-center justify-end rounded-b-lg border-gray2 p-2">
+          {(AUTOMATED_ALLOWANCES.includes(label) ||
+            AUTOMATED_DEDUCTIONS.includes(label)) && (
+            <button
+              onClick={restoreDefault}
+              disabled={loading || !edit}
+              className="flex flex-row items-center justify-center gap-2 ml-5 p-1 rounded-lg text-primary hover:text-live border hover:border-live transition-all duration-300"
+            >
+              {loading ? (
+                <span className="animate-spin">
+                  <FaSpinner />
+                </span>
+              ) : (
+                <MdRestore />
+              )}{" "}
+              <span>Default</span>
+            </button>
+          )}
+
           <button
             onClick={handleSave}
             disabled={loading || !edit}

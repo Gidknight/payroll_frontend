@@ -36,7 +36,7 @@ const StaffLayout = ({
               />
               <div className="flex flex-row items-center justify-between w-full">
                 <BackBTN />
-                <div className="flex flex-row items-center justify-center gap-5">
+                <div className="flex flex-row items-center justify-center gap-2">
                   <div>
                     <InpageLink
                       isLoading={loading}

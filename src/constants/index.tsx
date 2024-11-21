@@ -6,7 +6,13 @@ import {
   BiUnite,
   BiUser,
 } from "react-icons/bi";
-import { BsBank, BsPeopleFill, BsPersonAdd, BsPostage } from "react-icons/bs";
+import {
+  BsBank,
+  BsPeopleFill,
+  BsPersonAdd,
+  BsPostage,
+  BsRobot,
+} from "react-icons/bs";
 import { FaBalanceScale, FaUserMd } from "react-icons/fa";
 import { GiOfficeChair } from "react-icons/gi";
 import {
@@ -393,4 +399,13 @@ export const ADMIN_SETTINGS_PAGES: PageTypes[] = [
     icon: <GrOrganization />,
     to: "/administration-settings/organization-setup",
   },
+  {
+    id: 6,
+    title: "Batch Computation",
+    icon: <BsRobot />,
+    to: "/administration-settings/batch-computation",
+  },
 ];
+
+export const AUTOMATED_ALLOWANCES = ["HAZARD"];
+export const AUTOMATED_DEDUCTIONS = ["TAX"];

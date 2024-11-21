@@ -46,6 +46,7 @@ import UploadAllowancesPage from "./pages/administration/UploadAllowancesPage";
 import UploadDeductionsPage from "./pages/administration/UploadDeductionsPage";
 import SwitchMonthPage from "./pages/administration/SwitchMonthPage";
 import OrgSetupPage from "./pages/administration/OrgSetupPage";
+import BatchComputationPage from "./pages/administration/BatchComputationPage";
 
 const router = createBrowserRouter([
   {
@@ -151,6 +152,10 @@ const router = createBrowserRouter([
       {
         path: "/administration-settings/organization-setup",
         element: <OrgSetupPage />,
+      },
+      {
+        path: "/administration-settings/batch-computation",
+        element: <BatchComputationPage />,
       },
     ],
   },

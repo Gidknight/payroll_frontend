@@ -49,6 +49,7 @@ export interface JobsTypes {
     year: number;
     status: string;
   };
+  all_sub_units: SubUnitTypes[];
 }
 
 export interface AllowanceTypes {
@@ -64,6 +65,7 @@ export interface IndividualAllowanceTypes {
   IndividualId: number;
   Amount: number;
   DatedOnId: number;
+  Name: string;
   AllowanceNames: AccountTypes;
 }
 
@@ -73,6 +75,7 @@ export interface IndividualDeductionTypes {
   IndividualId: number;
   Amount: number;
   DatedOnId: number;
+  Name: string;
   DeductionNames: AllowanceTypes;
 }
 
@@ -171,7 +174,7 @@ export interface MasterReportTypes {
 export interface UploadStatTypes {
   total: number;
   success: number;
-  failures: { id: number; staff_number: string }[];
+  failures: { id: number; staff_number: string; message: string }[];
 }
 export interface UserIDType {
   user_id: string;

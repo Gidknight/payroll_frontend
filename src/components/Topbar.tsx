@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
 
 import { useAuthStore } from "../stores/authStore";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useNavigation } from "react-router-dom";
 import { logout } from "../utils/requests";
 import toast from "react-hot-toast";
 import { BiLogOut } from "react-icons/bi";
+import TextInput from "./TextInput";
+import PrimaryButton from "./PrimaryButton";
+import { axiosInstance } from "../libs";
 
 const Topbar = () => {
+  const navigate = useNavigate();
   const userAuth = useAuthStore((state) => state.userAuth);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [staffNumber, setStaffNumber] = useState("");
+  const [name, setName] = useState("");
 
   const clearUser = useAuthStore((state) => state.clearUser);
 
@@ -34,6 +41,32 @@ const Topbar = () => {
     }
     // router.push("/");
   };
+
+  const handleSearch = async () => {
+    try {
+      setIsLoading(true);
+      const response = await axiosInstance.post("/staff/search", {
+        staff_number: staffNumber,
+        name: name.toUpperCase(),
+      });
+      if (response.status == 200) {
+        toast.success(response.data.message);
+        // navigate(`/staff/view-data/${response.data.staff.Id}`, {
+        //   replace: true,
+        // });
+        window.location.replace(`/staff/view-data/${response.data.staff.Id}`);
+        setName("");
+        setStaffNumber("");
+      } else {
+        toast.error(response?.data?.message);
+      }
+    } catch (error: any) {
+      // console.log(error);
+      toast.error(error?.response?.data?.message || "Error Making request");
+    } finally {
+      setIsLoading(false);
+    }
+  };
   useEffect(() => {}, []);
 
   return (
@@ -55,6 +88,32 @@ const Topbar = () => {
           )}
           <p>{!myCart.length ? "Cart Is Empty" : "Products In Cart"}</p>
         </Link> */}
+        <div className="flex flex-row items-center justify-center gap-1">
+          <TextInput
+            inputType="text"
+            placeholder="Staff Number"
+            isDisabled={isLoading}
+            isRequired={true}
+            onUpdate={setStaffNumber}
+            string={staffNumber}
+          />
+          <TextInput
+            inputType="text"
+            placeholder="First Name"
+            isDisabled={isLoading}
+            isRequired={true}
+            onUpdate={setName}
+            string={name}
+          />
+          <div>
+            <PrimaryButton
+              isLoading={isLoading}
+              title="Search"
+              type={"button"}
+              cusFunc={handleSearch}
+            />
+          </div>
+        </div>
 
         {userAuth.status && (
           <button

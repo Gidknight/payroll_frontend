@@ -1,10 +1,10 @@
 "use client";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
 const ErrorComponent = ({ message }: { message: string }) => {
-  const router = useRouter();
+  // const router = useRouter();
   const [isRefreshing, setIsRefreshing] = useState(false);
   const refresh = () => {
     setIsRefreshing(true);

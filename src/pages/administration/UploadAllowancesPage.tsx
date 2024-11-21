@@ -152,9 +152,12 @@ const UploadAllowancesPage = () => {
                 <div className="p-2 bg-red-50 border-x-2 border-b-2 border-error rounded-md">
                   {stat.failures.map((failed, findx) => (
                     <div key={findx}>
-                      <h1 className="text-lg">
+                      <h1 className="text-base">
                         Staff Number: {failed.staff_number}
                       </h1>
+                      <span className="text-sm font-normal text-error">
+                        Message: {failed?.message}
+                      </span>
                     </div>
                   ))}
                 </div>

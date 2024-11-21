@@ -1,4 +1,5 @@
 import { useGeneralStore } from "../../stores/general";
+import FinishOverlay from "./FinishOverlay";
 
 // import { useAuthStore } from "../../stores/authStore";
 import AddAllowanceOverlay from "./AddAllowanceOverlay";
@@ -9,6 +10,7 @@ const AllOverlays = () => {
 
   let isAddingAllowance = useGeneralStore((state) => state.isAddingAllowance);
   let isAddingDeduction = useGeneralStore((state) => state.isAddingDeduction);
+  let isDoneWithBatch = useGeneralStore((state) => state.isDoneWithBatch);
 
   return (
     <>
@@ -16,6 +18,7 @@ const AllOverlays = () => {
 
       {isAddingAllowance ? <AddAllowanceOverlay /> : null}
       {isAddingDeduction ? <AddDeductionOverlay /> : null}
+      {isDoneWithBatch ? <FinishOverlay /> : null}
       {/* </ClientOnly> */}
     </>
   );

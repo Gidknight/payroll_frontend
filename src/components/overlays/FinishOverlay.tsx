@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { MainButton, TextInput } from "./";
-import { Close, DeleteForever } from "@mui/icons-material";
+import { SecondaryButton, TextInput } from "../";
+// import { Close, DeleteForever } from "@mui/icons-material";
 import toast from "react-hot-toast";
-import { deleteAllStatus } from "@/utils";
+// import { deleteAllStatus } from "../../utils";
 import { Tooltip } from "@mui/material";
-import { useGeneralStore } from "@/app/(stores)/general";
+import { useGeneralStore } from "../../stores/general";
+import { MdClose } from "react-icons/md";
 
 const FinishOverlay = () => {
   const [passkey, setPasskey] = useState("");
@@ -18,30 +19,29 @@ const FinishOverlay = () => {
   );
 
   const handleFinish = async () => {
-    if (
-      passkey === "salary" ||
-      passkey === "sanyadare" ||
-      passkey === "Giddison"
-    ) {
-      try {
-        setIsLoading(true);
-        const response = await deleteAllStatus();
-
-        if (response.status) {
-          toast.success(response.message);
-          setIsDoneWithBatch(false);
-          window.location.reload();
-        } else {
-          toast.error(response.message);
-        }
-      } catch (error) {
-        console.log(error);
-        toast.error("Error Occured");
-      } finally {
-        setIsLoading(false);
+    try {
+      // setIsLoading(true);
+      if (
+        passkey === "salary" ||
+        passkey === "sanyadare" ||
+        passkey === "Giddison"
+      ) {
+        // const response = await deleteAllStatus();
+        // if (response.status) {
+        //   toast.success(response.message);
+        //   setIsDoneWithBatch(false);
+        //   window.location.reload();
+        // } else {
+        //   toast.error(response.message);
+        // }
+      } else {
+        setErrorMessage("Wrong Credential");
       }
-    } else {
-      setErrorMessage("Wrong Credential");
+    } catch (error) {
+      console.log(error);
+      toast.error("Error Occured");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -57,7 +57,7 @@ const FinishOverlay = () => {
       >
         <div
           className={`
-                        relative bg-red-50 w-full max-w-[400px] sm:h-[280px] h-[400px] m-auto  rounded-lg
+                        relative bg-red-50 w-full max-w-[400px]  h-auto m-auto p-5 rounded-lg
                     `}
         >
           <div className="h-full w-full flex flex-col items-center justify-between">
@@ -67,7 +67,7 @@ const FinishOverlay = () => {
                   className="text-primary hover:text-red-600"
                   onClick={() => setIsDoneWithBatch(false)}
                 >
-                  <Close />
+                  <MdClose />
                 </button>
               </Tooltip>
             </div>
@@ -77,19 +77,24 @@ const FinishOverlay = () => {
               </h2>
 
               <TextInput
-                value={passkey}
+                string={passkey}
+                isRequired={true}
                 onUpdate={setPasskey}
                 placeholder="***Passkey***"
                 inputType="password"
                 error={errorMessage}
+                isDisabled={isLoading}
               />
-              <MainButton
-                isLoading={isLoading}
-                text={"confirm"}
-                customFunc={handleFinish}
-                icon={<DeleteForever />}
-                isDisabled={!passkey ? true : false}
-              />
+              <div className="w-32">
+                <SecondaryButton
+                  isLoading={isLoading}
+                  title={"Delete"}
+                  cusFunc={handleFinish}
+                  // icon={<DeleteForever />}
+
+                  isLock={!passkey ? true : false}
+                />
+              </div>
               <h1 className="text-base italic text-slate-600">
                 This Action cannot be undone
               </h1>

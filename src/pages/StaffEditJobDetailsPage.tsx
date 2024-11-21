@@ -36,6 +36,7 @@ const StaffEditJobDetailsPage = () => {
   const [classification, setClassification] = useState<TitleTypes | null>(null);
   const [unit, setUnit] = useState<TitleTypes | null>(null);
   const [subunit, setSubunit] = useState<TitleTypes | null>(null);
+  const [allSubunit, setAllSubunit] = useState<TitleTypes[] | null>(null);
 
   const [hiredDate, setHiredDate] = useState("");
   const [jobStatus, setJobStatus] = useState("");
@@ -72,6 +73,7 @@ const StaffEditJobDetailsPage = () => {
         setPayableMonth(job.payable_month);
         setJobStatus(job.status || "");
         setHiredDate(formated_date);
+        setAllSubunit(job.all_sub_units);
       }
     } catch (error) {
     } finally {
@@ -133,11 +135,13 @@ const StaffEditJobDetailsPage = () => {
     }
   };
 
+  const handleUnitChange = (unitId) => {};
+
   useEffect(() => {
     if (params.id) {
       fetchData(params.id);
     }
-  }, [unit?.id]);
+  }, []);
 
   return (
     <StaffLayout
