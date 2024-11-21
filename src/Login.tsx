@@ -8,6 +8,7 @@ import TextInputWithLabel from "./components/TextInputWithLabel";
 import { BiLock, BiUser } from "react-icons/bi";
 import { useAuthStore } from "./stores/authStore";
 import { useGeneralStore } from "./stores/general";
+import toast from "react-hot-toast";
 
 function LoginPage(): JSX.Element {
   // const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
@@ -22,7 +23,7 @@ function LoginPage(): JSX.Element {
     const navigate = useNavigate();
     const setAuth = useAuthStore((state) => state.setAuth);
     const setUser = useAuthStore((state) => state.setUser);
-    const setStoreData = useGeneralStore((state) => state.setStoreData);
+
     const handleLogin = async (e: FormEvent) => {
       e.preventDefault();
       try {
@@ -31,23 +32,23 @@ function LoginPage(): JSX.Element {
         const response = await axios.post(
           "http://localhost:5000/api/v1/login",
           {
-            user_name: username,
+            email: username,
             password,
           }
         );
 
         // console.log(response.data)
-        const { token, user, store } = response?.data;
+        const { token, user } = response?.data;
         localStorage.setItem("token", token);
         setUser(user);
-        setStoreData(store);
+        toast.success("success");
         setAuth(true);
-        navigate("/dashboard");
+        navigate("/");
       } catch (error: any) {
         console.log("Error Logging in ==>>", error);
         if (error.status == 400) {
           setError("Invalid Credentials");
-        } else if (error.status == 500) {
+        } else {
           setError("Internal server error");
         }
       } finally {
@@ -67,18 +68,16 @@ function LoginPage(): JSX.Element {
           <TextInputWithLabel
             inputType="text"
             onUpdate={setUsername}
-            placeholder="Username"
+            placeholder="Email"
             string={username}
-            label="Username"
-            icon={<BiUser />}
+            label="Email"
           />
           <TextInputWithLabel
             inputType="password"
             onUpdate={setPassword}
-            placeholder="*****"
+            placeholder="***********"
             string={password}
             label="Password"
-            icon={<BiLock />}
           />
           <PrimaryButton
             title="login"

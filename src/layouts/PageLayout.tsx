@@ -17,9 +17,9 @@ const PageLayout = ({
   loading: boolean;
   pages: PageTypes[];
 }) => {
-  //   const token = localStorage.getItem("token");
-  const params = useParams();
-  const token = true;
+  const token = localStorage.getItem("token");
+  // const params = useParams();
+  // const token = true;
   if (token) {
     return (
       <>

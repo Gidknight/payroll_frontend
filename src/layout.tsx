@@ -4,8 +4,8 @@ import { Navigate } from "react-router-dom";
 // import OfflineDetector from "./OfflineDetector";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  //   const token = localStorage.getItem("token");
-  const token = true;
+  const token = localStorage.getItem("token");
+  // const token = true;
   if (token) {
     return (
       <>

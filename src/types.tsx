@@ -198,7 +198,8 @@ export interface User {
 
 export interface AuthUserTypes {
   id: string;
-  user_name: string;
+  username: string;
+  email: string;
   role: string;
   status: boolean;
   entry_id: string;

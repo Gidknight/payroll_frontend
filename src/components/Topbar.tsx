@@ -24,10 +24,11 @@ const Topbar = () => {
       setIsLoading(true);
 
       // const entry_id = session?.data?.entry_id
-      const response = await logout({
-        entry_id: userAuth.entry_id,
-        user_id: userAuth?.id,
-      });
+      const response = { status: 201 };
+      // const response = await logout({
+      //   entry_id: userAuth.entry_id,
+      //   user_id: userAuth?.id,
+      // });
       if (response.status == 201) {
         clearUser();
         localStorage.clear();
@@ -73,7 +74,7 @@ const Topbar = () => {
     <div className="w-full flex flex-row items-center justify-between bg-slate-400 bg-opacity-50 py-3 px-20 shadow-md sticky top-0">
       <h1 className="font-extrabold text-2xl text-primary uppercase w-full">
         <span className="text-sm font-normal capitalize">Hello again, </span>
-        {userAuth?.user_name}
+        {userAuth?.username}
       </h1>
       <div className="w-full flex flex-row items-center justify-end bg- gap-5">
         {/* <Link
@@ -115,7 +116,7 @@ const Topbar = () => {
           </div>
         </div>
 
-        {userAuth.status && (
+        {/* {userAuth.id && (
           <button
             className="flex flex-row items-center justify-start gap-2 text-primary border border-secondary text-center rounded-full p-2 hover:text-neutral hover:bg-secondary hover:shadow-md transition-all duration-300"
             onClick={handleLogout}
@@ -124,7 +125,7 @@ const Topbar = () => {
             {<BiLogOut size="22" />}
             <span>{isLoading ? "..." : "LogOut"}</span>
           </button>
-        )}
+        )} */}
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
-import { AuthStoreTypes, AuthUserTypes } from '@renderer/types'
-import { create } from 'zustand'
-import { persist, createJSONStorage, devtools } from 'zustand/middleware'
+import { AuthStoreTypes, AuthUserTypes } from "../types";
+import { create } from "zustand";
+import { persist, createJSONStorage, devtools } from "zustand/middleware";
 // import { User } from '../types'
 
 export const useAuthStore = create<AuthStoreTypes>()(
@@ -8,11 +8,12 @@ export const useAuthStore = create<AuthStoreTypes>()(
     persist(
       (set) => ({
         userAuth: {
-          id: '',
-          user_name: '',
+          id: "",
+          username: "",
+          email: "",
           status: false,
-          role: '',
-          entry_id: ''
+          role: "",
+          entry_id: "",
         },
         setUser: (data: AuthUserTypes) => set({ userAuth: data }),
         auth: false,
@@ -20,19 +21,20 @@ export const useAuthStore = create<AuthStoreTypes>()(
         clearUser: () =>
           set({
             userAuth: {
-              id: '',
-              user_name: '',
+              id: "",
+              username: "",
+              email: "",
               status: false,
-              role: '',
-              entry_id: ''
-            }
-          })
+              role: "",
+              entry_id: "",
+            },
+          }),
       }),
 
       {
-        name: 'auth',
-        storage: createJSONStorage(() => localStorage)
+        name: "auth",
+        storage: createJSONStorage(() => localStorage),
       }
     )
   )
-)
+);
