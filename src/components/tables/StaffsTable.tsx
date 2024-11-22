@@ -69,6 +69,14 @@ const columns: GridColDef[] = [
     editable: false,
     sortable: true,
   },
+  {
+    field: "net_pay",
+    headerName: "Net Pay",
+    type: "number",
+    width: 100,
+    editable: false,
+    sortable: true,
+  },
   // {
   //   field: "sell",
   //   headerName: "Sell",

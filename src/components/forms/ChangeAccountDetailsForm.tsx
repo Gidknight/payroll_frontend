@@ -16,10 +16,11 @@ const ChangeAccountDetailsForm = ({ user_id }: { user_id: string }) => {
       try {
         setLoading(true);
         const response = await axiosInstance.get("/user/" + user_id);
-        // console.log(response.data)
-        // console.log({ _store, _user })
-        // console.log(response.data.data)
-        setUser(response?.data?.data);
+
+        if (response.status == 200) {
+        }
+
+        setUser(response?.data);
       } catch (error) {
         console.log(error);
       } finally {
@@ -37,14 +38,14 @@ const ChangeAccountDetailsForm = ({ user_id }: { user_id: string }) => {
         </div>
       </div>
       <div className="w-full flex flex-col items-start justify-normal gap-5 p-5">
-        {user?.user_name && <ChangeUsername value={user?.user_name || ""} />}
+        {user?.username && <ChangeUsername value={user?.username || ""} />}
 
-        {(String(user?.contact) == "" || user?.contact) && (
+        {(String(user?.phone_number) == "" || user?.phone_number) && (
           <UserDetail
             inputType="number"
-            title="Phone Contact"
+            title="Phone Number"
             user_id={user_id}
-            value={user?.contact || ""}
+            value={user?.phone_number || ""}
             subText="A valid phone number"
           />
         )}
@@ -65,30 +66,30 @@ const ChangeAccountDetailsForm = ({ user_id }: { user_id: string }) => {
             value={user?.first_name}
           />
         )}
-        {(String(user?.last_name) == "" || user?.last_name) && (
+        {(String(user?.surname) == "" || user?.surname) && (
           <UserDetail
             inputType="text"
-            title="Last Name"
+            title="Surname"
             user_id={user_id}
-            value={user?.last_name}
+            value={user?.surname}
           />
         )}
-        {(String(user?.other_name) == "" || user?.other_name) && (
+        {(String(user?.other_names) == "" || user?.other_names) && (
           <UserDetail
             inputType="text"
             title="Other Name"
             user_id={user_id}
-            value={user?.other_name}
+            value={user?.other_names}
           />
         )}
 
-        {(String(user?.address) == "" || user?.address) && (
+        {/* {(String(user?.address) == "" || user?.address) && (
           <UserAddress
             title="Home Address"
             user_id={user_id}
             value={user?.address}
           />
-        )}
+        )} */}
       </div>
     </div>
   );

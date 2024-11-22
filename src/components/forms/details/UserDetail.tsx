@@ -3,7 +3,7 @@ import TextInput from "../../TextInput";
 import SecondaryButton from "../../SecondaryButton";
 import PrimaryButton from "../../PrimaryButton";
 import toast from "react-hot-toast";
-// import { updateUserDetail } from '../../../utils/requests'
+import { axiosInstance } from "../../../libs";
 
 const UserDetail = ({
   user_id,
@@ -27,11 +27,6 @@ const UserDetail = ({
     setUpdateDetail(false);
     setDetail(value || "");
   };
-  const updateUserDetail = async (body: {
-    id: string | number;
-    value: string | number;
-    type: string;
-  }) => {};
 
   const handleChange = async () => {
     setError("");
@@ -41,7 +36,7 @@ const UserDetail = ({
     }
     try {
       setIsLoading(true);
-      const response = await updateUserDetail({
+      const response = await axiosInstance.put(`/user/${user_id}`, {
         id: user_id,
         value: detail,
         type: title,

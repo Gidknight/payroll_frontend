@@ -57,39 +57,50 @@ function LoginPage(): JSX.Element {
     };
 
     return (
-      <div className="flex flex-col items-center justify-center w-full h-screen bg-black bg-opacity-20 p-10">
-        <form
-          className="space-y-4 my-auto min-w-[400px] m-h-[300px] p-10 bg-white rounded-2xl shadow-xl"
-          onSubmit={(e) => handleLogin(e)}
-        >
-          <h1 className="p-5  text-primary text-center font-bold text-[30px] uppercase">
-            Login Form
-          </h1>
-          <TextInputWithLabel
-            inputType="text"
-            onUpdate={setUsername}
-            placeholder="Email"
-            string={username}
-            label="Email"
-          />
-          <TextInputWithLabel
-            inputType="password"
-            onUpdate={setPassword}
-            placeholder="***********"
-            string={password}
-            label="Password"
-          />
-          <PrimaryButton
-            title="login"
-            isLoading={loading}
-            isLock={!username || !password ? true : false}
-            cusFunc={() => {}}
-            type="submit"
-          />
-          {error && (
-            <p className="text-error text-center font-semibold">{error}</p>
-          )}
-        </form>
+      <div className="flex flex-col items-center justify-center w-full h-screen bg-black bg-opacity-20 p-10 ">
+        <div className="my-auto space-y-10 ">
+          <div className="flex flex-col items-center justify-center gap-2">
+            <img
+              src="/vite.svg"
+              alt="AKYERITE SOLUTIONS COMPANY LOGO"
+              className="w-24 h-auto object-contain"
+            />
+            <h1 className="font-bold text-3xl">AKYERITE PAYROLL SOLUTION</h1>
+          </div>
+          <form
+            className="space-y-4  min-w-[400px] m-h-[300px] p-10 bg-white rounded-2xl shadow-xl"
+            onSubmit={(e) => handleLogin(e)}
+          >
+            <h1 className="p-5  text-primary text-center font-bold text-[30px] uppercase">
+              Login Form
+            </h1>
+            <TextInputWithLabel
+              inputType="text"
+              onUpdate={setUsername}
+              placeholder="Email"
+              string={username}
+              label="Email"
+            />
+            <TextInputWithLabel
+              inputType="password"
+              onUpdate={setPassword}
+              placeholder="***********"
+              string={password}
+              label="Password"
+            />
+            <PrimaryButton
+              title="login"
+              isLoading={loading}
+              isLock={!username || !password ? true : false}
+              cusFunc={() => {}}
+              type="submit"
+            />
+            {error && (
+              <p className="text-error text-center font-semibold">{error}</p>
+            )}
+          </form>
+        </div>
+        <p>All rights reserved by Akyerite Solutions</p>
       </div>
     );
   }

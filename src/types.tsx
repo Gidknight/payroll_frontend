@@ -182,18 +182,18 @@ export interface UserIDType {
 
 export interface User {
   id: string;
-  user_name: string;
-  last_name: string;
+  username: string;
+  surname: string;
   first_name: string;
-  other_name?: string;
+  other_names?: string;
   status: boolean;
   role: string;
   email: string;
   email_status?: boolean;
-  contact: string;
+  phone_number: string;
   contact_status?: boolean;
   password?: string;
-  address?: string;
+  // address?: string;
 }
 
 export interface AuthUserTypes {

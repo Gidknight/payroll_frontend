@@ -5,10 +5,12 @@ import {
   ChangeAccountDetailsForm,
   ChangePasswordForm,
 } from "../components";
+import { useAuthStore } from "../stores/authStore";
 // import BackBTN from "../components/BackBTN";
 // import NewStaffForm from "../components/forms/NewStaffForm";
 
 const MyProfilePage = () => {
+  const userAuth = useAuthStore((state) => state.userAuth);
   return (
     <Layout>
       <main className="wrapper">
@@ -17,8 +19,8 @@ const MyProfilePage = () => {
           <BackBTN />
         </div>
 
-        <ChangeAccountDetailsForm user_id="oi" />
-        <ChangePasswordForm user_id="0io" />
+        <ChangeAccountDetailsForm user_id={userAuth.id} />
+        <ChangePasswordForm user_id={userAuth.id} />
       </main>
     </Layout>
   );

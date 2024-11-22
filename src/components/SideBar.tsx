@@ -39,6 +39,11 @@ const SideBar = () => {
     <div className="flex flex-col items-center justify-between h-screen w-full shadow-lg bg-primary overflow-y-auto ">
       <div className="w-full ">
         {/* <StoreName storeData={store[0]} /> */}
+        <div className="bg-yellow-400 text-black p-1.5">
+          <h2 className="text-center text-lg lg:text-2xl font-bold">
+            AKYERITE PAYROLL SOLUTION
+          </h2>
+        </div>
         <ul className="w-full flex flex-col gap-2 items-start justify-start p-2 overflow-y-auto bg-primary">
           {NAV_LINKS.map((link: any, index: number) =>
             link.hasSub && link.subMenu ? (

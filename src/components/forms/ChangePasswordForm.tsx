@@ -60,11 +60,14 @@ const ChangePasswordForm = ({ user_id }: { user_id: string }) => {
     if (isError) return;
     try {
       setIsLoading(true);
-      const response = await axiosInstance.post("/user/security/password", {
-        user_id,
-        currentPassword,
-        newPassword,
-      });
+      const response = await axiosInstance.patch(
+        "/user/security/change-password",
+        {
+          user_id,
+          currentPassword,
+          newPassword,
+        }
+      );
 
       if (response.status === 201) {
         setCurrentPassword("");

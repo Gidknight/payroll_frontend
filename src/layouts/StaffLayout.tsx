@@ -16,7 +16,7 @@ const StaffLayout = ({
   loading: boolean;
 }) => {
   const token = localStorage.getItem("token");
-  // const params = useParams();
+  const params = useParams();
   // const token = true;
   if (token) {
     return (
