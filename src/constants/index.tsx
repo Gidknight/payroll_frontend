@@ -299,6 +299,12 @@ export const NAV_LINKS = [
         link: "/report/variation",
         icon: <BiCategory />,
       },
+      {
+        id: 515,
+        title: "History Log",
+        link: "/report/history",
+        icon: <BiCategory />,
+      },
     ],
   },
   {

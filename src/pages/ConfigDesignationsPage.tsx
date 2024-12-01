@@ -44,6 +44,7 @@ const ConfigDesignationsPage = () => {
         const response = await axiosInstance.patch(`/designations/${titleID}`, {
           id: titleID,
           Name: titleName?.toUpperCase(),
+          old: title?.Name,
         });
 
         if (response?.status == 201) {

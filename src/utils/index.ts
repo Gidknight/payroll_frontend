@@ -51,7 +51,7 @@ export const convertDate = (storedTime: any, single = true) => {
   }
   const date = moment(storedTime);
   if (single) {
-    return date.format("DD/MM/yyyy");
+    return date.format("MMM DD YYYY hh:mm:ssA");
   } else {
     return {
       year: date.year(),

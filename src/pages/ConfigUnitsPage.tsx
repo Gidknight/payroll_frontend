@@ -44,6 +44,7 @@ const ConfigUnitsPage = () => {
         const response = await axiosInstance.patch(`/units/${titleID}`, {
           id: titleID,
           Name: titleName?.toUpperCase(),
+          old: title?.Name,
         });
 
         if (response?.status == 201) {

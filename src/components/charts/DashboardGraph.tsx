@@ -7,20 +7,13 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { GraphDataTypes } from "../../types";
 
 interface LineGraphTypes {
   height?: number;
   width?: number;
 
-  data: {
-    month: string | number;
-    gross_pay?: number;
-    net_pay?: number;
-    allowance?: number;
-    deduction?: number;
-    total_staff?: number;
-    basic_salary?: number;
-  }[];
+  data: GraphDataTypes[];
 }
 
 const DashboardGraph = ({

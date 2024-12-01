@@ -45,6 +45,7 @@ const ConfigTitlesPage = () => {
         const response = await axiosInstance.patch(`/titles/${titleID}`, {
           id: titleID,
           Name: titleName,
+          old: title?.Name,
         });
 
         if (response?.status == 201) {

@@ -23,7 +23,7 @@ const TitleForm = ({ purpose }: { purpose: string }): JSX.Element => {
           Sortcode: sortCode,
         });
       } else if (purpose === "pension bank") {
-        response = await axiosInstance.post("/pensionBank", {
+        response = await axiosInstance.post("/pensionAccount", {
           Name: name?.toUpperCase(),
           Sortcode: sortCode,
         });

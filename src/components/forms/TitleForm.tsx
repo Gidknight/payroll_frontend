@@ -37,6 +37,10 @@ const TitleForm = ({ purpose }: { purpose: string }): JSX.Element => {
         response = await axiosInstance.post("/classifications", {
           Name: name.toUpperCase(),
         });
+      } else if (purpose === "pension bank") {
+        response = await axiosInstance.post("/pensionAccount", {
+          Name: name?.toUpperCase(),
+        });
       }
 
       if (response?.status == 201) {

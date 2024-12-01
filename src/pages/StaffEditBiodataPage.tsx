@@ -71,6 +71,7 @@ const StaffEditBiodataPage = () => {
       // if (subs.status == 200) {
       //   setSubUnits(subs.data);
       // }
+      console.log(response);
       if (response.status == 200) {
         // console.log(response.data.title);
         setSelectedTitle(response?.data?.title?.id);

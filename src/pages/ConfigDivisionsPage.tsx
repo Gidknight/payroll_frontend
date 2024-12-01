@@ -43,6 +43,7 @@ const ConfigDivisionsPage = () => {
         const response = await axiosInstance.patch(`/divisions/${titleID}`, {
           id: titleID,
           Name: titleName?.toUpperCase(),
+          old: title?.Name,
         });
 
         if (response?.status == 201) {

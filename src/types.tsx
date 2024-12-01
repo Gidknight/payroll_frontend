@@ -149,6 +149,8 @@ export interface ReportType {
   gross_pay: number;
   net_pay: number;
 }
+
+export interface ReportColumnsTypes {}
 export interface MasterReportTypes {
   title: string;
   date: { Month: string; Year: Number };
@@ -169,6 +171,21 @@ export interface MasterReportTypes {
   available_allowances: { name: string; total: number }[];
   available_deductions: { name: string; total: number }[];
   report: ReportType[][];
+  columns: string[];
+}
+
+export interface HistoryLogTypes {
+  title: string;
+  date: { Month: string; Year: Number };
+  organization: {
+    OrganisationName: string;
+    OrganisationAddress: string;
+    OtherInfo1?: string;
+    OtherInfo2?: string;
+  };
+  records: [][];
+  // records: { id: number; staff: string; action: string; createdAt: string }[];
+  columns: string[];
 }
 
 export interface UploadStatTypes {
@@ -261,6 +278,16 @@ export interface TextAreaCompTypes {
   isRequired?: boolean;
 }
 
+export interface GraphDataTypes {
+  month: string | number;
+  gross_pay?: number;
+  net_pay?: number;
+  allowance?: number;
+  deduction?: number;
+  total_staff?: number;
+  basic_salary?: number;
+}
+
 //////////////////////////////////////////////
 //////////////////////////////////////////////
 
@@ -284,13 +311,6 @@ export interface InnerObject {
 
 export interface Element {
   [innerArray: string]: InnerObject[]; // Allows the object to have an array of InnerObject under any string key
-}
-
-export interface HistoryLogTypes {
-  id: number | string;
-  attendant?: string;
-  action?: string;
-  date?: string;
 }
 
 export interface StoreReportTypes {

@@ -47,6 +47,7 @@ import UploadDeductionsPage from "./pages/administration/UploadDeductionsPage";
 import SwitchMonthPage from "./pages/administration/SwitchMonthPage";
 import OrgSetupPage from "./pages/administration/OrgSetupPage";
 import BatchComputationPage from "./pages/administration/BatchComputationPage";
+import ReportHistoryPage from "./pages/reports/ReportHistoryPage";
 
 const router = createBrowserRouter([
   {
@@ -160,68 +161,82 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/payslip/send-payslip",
-    element: <PayslipSendPage />,
+    path: "/payslip",
+    children: [
+      {
+        path: "/payslip/send-payslip",
+        element: <PayslipSendPage />,
+      },
+      {
+        path: "/payslip/statistics",
+        element: <PayslipStatsPage />,
+      },
+    ],
   },
   {
-    path: "/payslip/statistics",
-    element: <PayslipStatsPage />,
-  },
-  {
-    path: "/report/master",
-    element: <ReportMasterPage />,
-  },
-  {
-    path: "/report/payslip",
-    element: <ReportPayslipPage />,
-  },
-  {
-    path: "/report/allowance",
-    element: <ReportAllowancePage />,
-  },
-  {
-    path: "/report/deduction",
-    element: <ReportDeductionPage />,
-  },
-  {
-    path: "/report/checklist",
-    element: <ReportCheckListPage />,
-  },
-  {
-    path: "/report/norminal-roll",
-    element: <ReportNorminalRollPage />,
-  },
-  {
-    path: "/report/bank-schedule",
-    element: <ReportBankSchedulePage />,
-  },
-  {
-    path: "/report/bank-statement",
-    element: <ReportBankStatementPage />,
-  },
-  {
-    path: "/report/deduct-epay",
-    element: <ReportDeductionEpayPage />,
-  },
-  {
-    path: "/report/journal",
-    element: <ReportJournalPage />,
-  },
-  {
-    path: "/report/status",
-    element: <ReportStatusPage />,
-  },
-  {
-    path: "/report/consolidation-basic",
-    element: <ReportConsolidationPage />,
-  },
-  {
-    path: "/report/charms-payroll",
-    element: <ReportCharmsPage />,
-  },
-  {
-    path: "/report/variation",
-    element: <ReportVariationPage />,
+    path: "/report",
+    children: [
+      {
+        path: "/report/master",
+        element: <ReportMasterPage />,
+      },
+      {
+        path: "/report/payslip",
+        element: <ReportPayslipPage />,
+      },
+      {
+        path: "/report/allowance",
+        element: <ReportAllowancePage />,
+      },
+      {
+        path: "/report/deduction",
+        element: <ReportDeductionPage />,
+      },
+      {
+        path: "/report/checklist",
+        element: <ReportCheckListPage />,
+      },
+      {
+        path: "/report/norminal-roll",
+        element: <ReportNorminalRollPage />,
+      },
+      {
+        path: "/report/bank-schedule",
+        element: <ReportBankSchedulePage />,
+      },
+      {
+        path: "/report/bank-statement",
+        element: <ReportBankStatementPage />,
+      },
+      {
+        path: "/report/deduct-epay",
+        element: <ReportDeductionEpayPage />,
+      },
+      {
+        path: "/report/journal",
+        element: <ReportJournalPage />,
+      },
+      {
+        path: "/report/status",
+        element: <ReportStatusPage />,
+      },
+      {
+        path: "/report/consolidation-basic",
+        element: <ReportConsolidationPage />,
+      },
+      {
+        path: "/report/charms-payroll",
+        element: <ReportCharmsPage />,
+      },
+      {
+        path: "/report/variation",
+        element: <ReportVariationPage />,
+      },
+      {
+        path: "/report/history",
+        element: <ReportHistoryPage />,
+      },
+    ],
   },
 ]);
 

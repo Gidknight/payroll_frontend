@@ -66,7 +66,7 @@ export { default as DashboardGraph } from "./charts/DashboardGraph.tsx";
 // Printables
 // export { default as SalesDetail } from "./printables/SalesDetail.tsx";
 export { default as MasterReport } from "./printables/MasterReport.tsx";
-// export { default as SalesReport } from "./printables/SalesReport.tsx";
+export { default as HistoryReport } from "./printables/HistoryReport.tsx";
 // export { default as CreditsReport } from "./printables/CreditsReport.tsx";
 // export { default as PaymentReport } from "./printables/PaymentReport.tsx";
 // export { default as CashSalesReceipt } from "./printables/CashSalesReceipt.tsx";

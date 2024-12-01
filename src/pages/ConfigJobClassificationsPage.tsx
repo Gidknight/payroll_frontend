@@ -46,6 +46,7 @@ const ConfigJobClassificationsPage = () => {
           {
             id: titleID,
             Name: titleName?.toUpperCase(),
+            old: title?.Name,
           }
         );
 

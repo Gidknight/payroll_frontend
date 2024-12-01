@@ -3,22 +3,26 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import Layout from "./layout";
-import { DashboardGraph, Header, StaffsTable } from "./components";
+import { DashboardGraph, ErrorCard, Header, StaffsTable } from "./components";
 import { axiosInstance } from "./libs";
 import toast from "react-hot-toast";
+import ErrorComponent from "./components/ErrorComponent";
+import { GraphDataTypes } from "./types";
 
 interface HomeTypes {
   negative_staffs: [];
-  chart_array: { month: string; allowance: number; deduction: number }[];
+  chart_array: GraphDataTypes[];
 }
 
 function App() {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<HomeTypes | null>(null);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setMessage("");
         setLoading(true);
         const response = await axiosInstance.get("/dashboard");
         if (response.status == 200) {
@@ -28,9 +32,10 @@ function App() {
         }
       } catch (error: any) {
         if (error?.status == 401) {
+          setMessage("Unauthorized, Try Logging In Again");
           // toast.error("Unauthorized, Try Logging In Again");
         }
-        console.log(error);
+        // console.log(error);
       } finally {
         setLoading(false);
       }
@@ -80,16 +85,22 @@ function App() {
     <Layout>
       <div className="wrapper">
         <Header location="AKYERITE PAYROLL SOLUTION" />
-        <DashboardGraph data={data?.chart_array} />
-        <div className="holder-active">
-          <h2 className="header-text">Staffs With Negative Net Pay</h2>
-          <div>
-            <StaffsTable
-              data={data?.negative_staffs || []}
-              isLoading={loading}
-            />
+        {message ? (
+          <ErrorCard errorMessage={message} />
+        ) : (
+          <div className="w-full space-y-5">
+            <DashboardGraph data={data?.chart_array || []} />
+            <div className="holder-active">
+              <h2 className="header-text">Staffs With Negative Net Pay</h2>
+              <div>
+                <StaffsTable
+                  data={data?.negative_staffs || []}
+                  isLoading={loading}
+                />
+              </div>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </Layout>
   );

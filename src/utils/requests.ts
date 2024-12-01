@@ -35,6 +35,12 @@ export const getAllBanks = async () => {
   return response;
 };
 
+export const getPensionBanks = async () => {
+  const response = await axiosInstance.get("/pensionAccount");
+
+  return response;
+};
+
 export const getAllTitles = async () => {
   const response = await axiosInstance.get("/titles");
 
