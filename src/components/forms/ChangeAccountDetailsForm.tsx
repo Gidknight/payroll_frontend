@@ -3,10 +3,10 @@ import { ImProfile } from "react-icons/im";
 import ChangeUsername from "./details/ChangeUsername";
 
 import UserDetail from "./details/UserDetail";
-import UserAddress from "./details/UserAddress";
 import { useEffect, useState } from "react";
 import { User } from "../../types";
 import { axiosInstance } from "../../libs";
+import UserQuestion from "./details/UserQuestion";
 
 const ChangeAccountDetailsForm = ({ user_id }: { user_id: string }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -19,7 +19,7 @@ const ChangeAccountDetailsForm = ({ user_id }: { user_id: string }) => {
 
         if (response.status == 200) {
         }
-
+        // console.log(response.data.answer);
         setUser(response?.data);
       } catch (error) {
         console.log(error);
@@ -46,7 +46,7 @@ const ChangeAccountDetailsForm = ({ user_id }: { user_id: string }) => {
             title="Phone Number"
             user_id={user_id}
             value={user?.phone_number || ""}
-            subText="A valid phone number"
+            // subText="(A valid phone number)"
           />
         )}
 
@@ -83,13 +83,31 @@ const ChangeAccountDetailsForm = ({ user_id }: { user_id: string }) => {
           />
         )}
 
-        {/* {(String(user?.address) == "" || user?.address) && (
-          <UserAddress
-            title="Home Address"
+        {
+          <UserQuestion
+            title={`Security Question`}
+            subText={
+              user?.question
+                ? ""
+                : "(Please setup your security question as you need this to retrieve your account)"
+            }
             user_id={user_id}
-            value={user?.address}
+            value={user?.question}
           />
-        )} */}
+        }
+        {
+          <UserDetail
+            inputType="text"
+            title="Answer"
+            user_id={user_id}
+            value={user?.answer}
+            subText={
+              user?.answer
+                ? ""
+                : "(Please setup your security answer as you need this to retrieve your account)"
+            }
+          />
+        }
       </div>
     </div>
   );

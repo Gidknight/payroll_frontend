@@ -3,26 +3,29 @@ import toast from "react-hot-toast";
 import { BiLoaderCircle } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { axiosInstance } from "../../libs";
+import { hashPassword } from "../../utils";
 
 interface DeletorType {
   label: string;
   // from: string;
-  question: string;
-  answer: string;
-  placeholder: string;
-  user_id: string;
+  // question: string;
+  // answer: string;
+  // placeholder: string;
+
   deleteFunction: () => void;
 }
 
 const Deletor = ({
   label,
   // from,
-  question,
-  answer,
-  placeholder,
-  user_id,
+  // question,
+  // answer,
+  // placeholder,
+
   deleteFunction,
 }: DeletorType) => {
+  const question = "Please, provide password again to confirm action";
   const [paper, setPaper] = useState("");
   const [showQuestion, setShowQuestion] = useState(false);
   // const [iscorrect, setIscorrect] = useState(false)
@@ -37,57 +40,24 @@ const Deletor = ({
     setErrorMessage("");
     setShowQuestion(false);
   };
-  const navigate = useNavigate();
-  const handleDeleteCategory = async () => {
-    try {
-      const response = await fetch(`/api/category/${answer}`, {
-        method: "DELETE",
-        body: JSON.stringify({ user_id: user_id }),
-      });
-      if (response.ok) {
-        toast.success("Deleted successfully");
-        navigate("/maintenance/category", { replace: true });
-      }
-    } catch (error) {
-      toast.error("Not Deleted");
-      console.log(error);
-    }
-  };
-
-  const handleDeleteProduct = async () => {
-    try {
-      const res = await fetch(`/api/product/${answer}`, {
-        method: "DELETE",
-        body: JSON.stringify({ user_id: user_id }),
-      });
-      const response = await res.json();
-      if (response.status) {
-        toast.success(response.messgae);
-        clearForm();
-        navigate("/maintenance/product", { replace: true });
-      }
-    } catch (error) {
-      toast.error("Not Deleted");
-      console.log(error);
-    }
-  };
 
   const handleSubmit = async () => {
     try {
       setIsLoading(true);
-      if (paper === answer) {
+      const response = await axiosInstance.post(
+        "/administration/checkPassword",
+        {
+          password: paper,
+        }
+      );
+      if (response.status === 200) {
         setErrorMessage("");
-        // if (from === "category") {
-        //   await handleDeleteCategory();
-        // } else if (from === "product") {
-        //   await handleDeleteProduct();
-        // }
         deleteFunction();
       } else {
-        setErrorMessage("ID does not match");
+        setErrorMessage(response?.data?.message);
       }
-    } catch (error) {
-      setErrorMessage("An Error Occured");
+    } catch (error: any) {
+      setErrorMessage(error?.response?.data?.message || "An Error Occured");
     } finally {
       setIsLoading(false);
     }
@@ -111,10 +81,10 @@ const Deletor = ({
           <div className="flex flex-col items-center justify-center gap-2 w-100">
             <fieldset>
               <label className="text-lg font-semibold text-black px-5">
-                {question}?
+                {question}
               </label>
               <input
-                type="text"
+                type="password"
                 value={paper}
                 onChange={(e) => setPaper(e.target.value)}
                 className={`
@@ -129,7 +99,7 @@ const Deletor = ({
                 focus:outline-red-500
                 
             `}
-                placeholder={placeholder}
+                placeholder={"**********"}
               />
             </fieldset>
 

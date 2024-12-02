@@ -1,4 +1,4 @@
-import { TextAreaCompTypes } from "@/app/types";
+import { TextAreaCompTypes } from "../types";
 import { FaIcons } from "react-icons/fa";
 import { IconBase } from "react-icons/lib";
 

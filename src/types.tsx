@@ -210,7 +210,8 @@ export interface User {
   phone_number: string;
   contact_status?: boolean;
   password?: string;
-  // address?: string;
+  question?: string;
+  answer?: string;
 }
 
 export interface AuthUserTypes {

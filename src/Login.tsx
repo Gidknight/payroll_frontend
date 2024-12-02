@@ -1,7 +1,7 @@
 // import electronLogo from './assets/electron.svg'
 
-import { FormEvent, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { FormEvent, useEffect, useState } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { PrimaryButton } from "./components";
 import axios from "axios";
 import TextInputWithLabel from "./components/TextInputWithLabel";
@@ -9,6 +9,7 @@ import { BiLock, BiUser } from "react-icons/bi";
 import { useAuthStore } from "./stores/authStore";
 import { useGeneralStore } from "./stores/general";
 import toast from "react-hot-toast";
+import { axiosInstance } from "./libs";
 
 function LoginPage(): JSX.Element {
   // const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
@@ -56,6 +57,23 @@ function LoginPage(): JSX.Element {
       }
     };
 
+    useEffect(() => {
+      const fetchUsers = async () => {
+        try {
+          const response = await axiosInstance.get("/ping");
+          if (response.status == 200) {
+            const count = response.data.count;
+            if (count === 0) {
+              navigate("/register-first-user");
+            }
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetchUsers();
+    }, []);
+
     return (
       <div className="flex flex-col items-center justify-center w-full h-screen bg-black bg-opacity-20 p-10 ">
         <div className="my-auto space-y-10 ">
@@ -98,6 +116,18 @@ function LoginPage(): JSX.Element {
             {error && (
               <p className="text-error text-center font-semibold">{error}</p>
             )}
+            <div className="bg-slate-300 py-5 px-2">
+              <p>
+                Forgot Password?{" "}
+                <Link
+                  to={"/password-retrieval"}
+                  className="text-primary font-semibold hover:underline transition-all duration-300"
+                >
+                  {" "}
+                  Retrive Password
+                </Link>
+              </p>
+            </div>
           </form>
         </div>
         <p>All rights reserved by Akyerite Solutions</p>

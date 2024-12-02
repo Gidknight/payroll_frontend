@@ -48,19 +48,25 @@ import SwitchMonthPage from "./pages/administration/SwitchMonthPage";
 import OrgSetupPage from "./pages/administration/OrgSetupPage";
 import BatchComputationPage from "./pages/administration/BatchComputationPage";
 import ReportHistoryPage from "./pages/reports/ReportHistoryPage";
+import RetrivePasswordPage from "./RetrivePassword";
+import Register from "./Register";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
   },
-  // {
-  //   path: "/on-boarding",
-  //   element: <OnboardingPage />,
-  // },
+  {
+    path: "/register-first-user",
+    element: <Register />,
+  },
   {
     path: "/login",
     element: <LoginPage />,
+  },
+  {
+    path: "/password-retrieval",
+    element: <RetrivePasswordPage />,
   },
   {
     path: "/staff/add-new",

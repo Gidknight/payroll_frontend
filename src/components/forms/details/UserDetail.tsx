@@ -61,7 +61,9 @@ const UserDetail = ({
     <div className=" p-5 w-full flex flex-col md:flex-row items-center justify-between border-2 border-slate-400 rounded-2xl shadow-md">
       <div className="w-1/2 flex flex-col items-start justify-start gap-2">
         <h2 className="text-primary font-bold text-xl capitalize">{title}</h2>
-        <p>{subText}</p>
+        <p className="font-normal text-pretty text-base text-error">
+          {subText}
+        </p>
       </div>
       <div className="w-1/2 flex flex-col items-end justify-start gap-1">
         <TextInput

@@ -4,15 +4,18 @@ import PrimaryButton from "../../PrimaryButton";
 import toast from "react-hot-toast";
 // import { updateUserDetail } from '../../../utils/requests'
 import { TextArea } from "../..";
+import { axiosInstance } from "../../../libs";
 
-const UserAddress = ({
+const UserQuestion = ({
   user_id,
   value,
   title,
+  subText,
 }: {
   user_id: string;
   value?: string;
   title: string;
+  subText?: string;
 }) => {
   const [detail, setDetail] = useState(value || "");
   const [isLoading, setIsLoading] = useState(false);
@@ -32,7 +35,18 @@ const UserAddress = ({
     }
     try {
       setIsLoading(true);
-      const response = await updateUserDetail({
+      setIsLoading(true);
+      // const response = await axiosInstance.put(`/user/${user_id}`, {
+      //   id: user_id,
+      //   value: detail,
+      //   type: title,
+      // });
+      // if (response?.status == 201) {
+      //   toast.success(response?.data?.message);
+      //   setUpdateDetail(false);
+
+      //   // window.location.reload()
+      const response = await axiosInstance.put(`/user/${user_id}`, {
         id: user_id,
         value: detail,
         type: title,
@@ -40,9 +54,6 @@ const UserAddress = ({
       if (response?.status == 201) {
         toast.success(response?.data?.message);
         setUpdateDetail(false);
-        setTimeout(() => {
-          // window.location.reload()
-        }, 1000);
       } else {
         toast.error(response?.data?.message);
       }
@@ -57,12 +68,15 @@ const UserAddress = ({
   return (
     <div className=" p-5 w-full flex flex-col md:flex-row items-center justify-between border-2 border-slate-400 rounded-2xl shadow-md">
       <div className="w-1/2 flex flex-col items-start justify-start gap-2">
-        <h2 className="text-primary font-bold text-xl capitalize">{title}</h2>
+        <h2 className="text-primary font-bold text-xl capitalize">{title} </h2>
+        <p className="font-normal text-pretty text-base text-error">
+          {subText}
+        </p>
         {/* <p>This Cannot be changed later</p> */}
       </div>
       <div className="w-1/2 flex flex-col items-end justify-start gap-1">
         <TextArea
-          rows={4}
+          rows={3}
           onUpdate={setDetail}
           placeholder={title}
           string={detail}
@@ -102,4 +116,4 @@ const UserAddress = ({
   );
 };
 
-export default UserAddress;
+export default UserQuestion;
