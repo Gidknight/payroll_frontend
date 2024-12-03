@@ -24,6 +24,23 @@ export interface SalaryScaleTypes {
   Name: string;
 }
 
+export interface SalaryScaleFullTypes {
+  id: number;
+  Name: string;
+  GradeCode: string;
+  Level: string;
+  Step: string;
+  Amount: number;
+  Rent: number;
+  Transport: number;
+  CallDuty: number;
+  Percular: number;
+  Rural: number;
+  users?: number;
+  masterUsers?: number;
+  links?: number;
+}
+
 export interface SubUnitTypes {
   id: number;
   Name: string;
@@ -58,6 +75,7 @@ export interface AllowanceTypes {
   AccountName: string | null;
   AccountNumber: string | null;
   Codes: string | null;
+  users?: number;
 }
 export interface IndividualAllowanceTypes {
   id: number;
@@ -233,12 +251,14 @@ export interface AuthStoreTypes {
 export interface TitleTypes {
   id: number;
   Name: string;
+  users?: number;
 }
 
 export interface BankTypes {
   id: number;
   Name: string;
   Sortcode?: number | string;
+  users?: number;
 }
 
 export interface ShowErrorObject {

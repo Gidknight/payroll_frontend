@@ -34,7 +34,7 @@ const TextInputWithLabel = ({
         }`}
       >
         <input
-          placeholder={placeholder}
+          placeholder={placeholder ? placeholder : label}
           disabled={isDisabled}
           className={`
                 block

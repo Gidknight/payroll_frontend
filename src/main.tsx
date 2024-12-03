@@ -50,6 +50,8 @@ import BatchComputationPage from "./pages/administration/BatchComputationPage";
 import ReportHistoryPage from "./pages/reports/ReportHistoryPage";
 import RetrivePasswordPage from "./RetrivePassword";
 import Register from "./Register";
+import NewSalaryScalePage from "./pages/NewSalaryScalePage";
+import SalaryScaleDetailsPage from "./pages/SalaryScaleDetailsPage";
 
 const router = createBrowserRouter([
   {
@@ -123,6 +125,14 @@ const router = createBrowserRouter([
   {
     path: "/salary-configuration",
     element: <SalaryConfigPage />,
+  },
+  {
+    path: "/salary-configuration/add-new",
+    element: <NewSalaryScalePage />,
+  },
+  {
+    path: "/salary-configuration/:id",
+    element: <SalaryScaleDetailsPage />,
   },
   {
     path: "/allowances-configuration",

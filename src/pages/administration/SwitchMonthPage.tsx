@@ -115,13 +115,26 @@ const SwitchMonthPage = () => {
   const [years, setYears] = useState([]);
 
   const handleMonthSwitch = async () => {
+    if (!currentMonth) return;
     try {
       setLoading(true);
-      //
-      toast.success(currentMonth?.Month + "|| In Developemt");
+      console.log(currentMonth);
+      const response = await axiosInstance.patch("/administration/month", {
+        Id: currentMonth?.id,
+        Month: currentMonth?.Month,
+        Year: currentMonth?.Year,
+      });
+      if (response.status == 201) {
+        toast.success(response?.data?.message);
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+      } else {
+        toast.error(response?.data?.message);
+      }
       return false;
-    } catch (error) {
-      toast.error("Error Switching Month");
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message || "Error Switching Month");
     } finally {
       setLoading(false);
     }
@@ -130,11 +143,18 @@ const SwitchMonthPage = () => {
   const handleMonthAdd = async () => {
     try {
       setLoading(true);
-      //
-      toast.success("In Development");
+      const response = await axiosInstance.post("/administration/month", {
+        newMonth,
+        newYear,
+      });
+      if (response.status == 201) {
+        toast.success(response?.data?.message);
+      } else {
+        toast.error(response?.data?.message);
+      }
       return false;
-    } catch (error) {
-      toast.error("Error Adding New Month");
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message || "Error Adding New Month");
     } finally {
       setLoading(false);
     }

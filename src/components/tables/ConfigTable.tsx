@@ -26,6 +26,13 @@ const ConfigTable = ({
       width: 170,
       sortable: true,
     },
+    {
+      field: "users",
+      headerName: "Links",
+      type: "number",
+      width: 100,
+      sortable: true,
+    },
 
     {
       field: "more",

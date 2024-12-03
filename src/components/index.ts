@@ -36,6 +36,7 @@ export { default as BankTable } from "./tables/BankTable.tsx";
 export { default as StatTable } from "./tables/StatTable.tsx";
 export { default as StatTables } from "./tables/StatTables.tsx";
 export { default as AllowDeductTable } from "./tables/AllowDeductTable.tsx";
+export { default as SalaryScalesTable } from "./tables/SalaryScalesTable.tsx";
 
 // forms
 

@@ -4,6 +4,7 @@ import { useAuthStore } from "../stores/authStore";
 import { BiLogOut } from "react-icons/bi";
 import toast from "react-hot-toast";
 import { useState } from "react";
+import { axiosInstance } from "../libs";
 
 const SideBar = () => {
   // const store = await getStoreData();
@@ -17,11 +18,10 @@ const SideBar = () => {
       setIsLoading(true);
 
       // const entry_id = session?.data?.entry_id
-      const response = { status: 201 };
-      // const response = await logout({
-      //   entry_id: userAuth.entry_id,
-      //   user_id: userAuth?.id,
-      // });
+      // const response = { status: 201 };
+      const response = await axiosInstance.post("/logout", {
+        user_id: userAuth?.id,
+      });
       if (response.status == 201) {
         clearUser();
         localStorage.clear();

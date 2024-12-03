@@ -33,6 +33,13 @@ const BankTable = ({
       width: 100,
       sortable: true,
     },
+    {
+      field: "users",
+      headerName: "Users",
+      type: "number",
+      width: 100,
+      sortable: true,
+    },
 
     {
       field: "more",

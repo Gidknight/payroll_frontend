@@ -2,88 +2,98 @@
 
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
-import Link from "next/link";
 import { BiLoaderCircle } from "react-icons/bi";
+import { Link } from "react-router-dom";
+import { SalaryScaleFullTypes } from "../../types";
 
 const columns: GridColDef[] = [
-  { field: "id", headerName: "Product ID", width: 100 },
+  { field: "id", headerName: "ID", width: 70 },
   {
-    field: "name",
-    headerName: "Product Name",
+    field: "Name",
+    headerName: "Name",
     type: "string",
-    width: 180,
+    width: 100,
     editable: false,
   },
   {
-    field: "quantity",
-    headerName: "Quantity",
-    type: "number",
-    width: 80,
-    editable: false,
-  },
-  {
-    field: "supplier_name",
-    headerName: "Supplier",
+    field: "GradeCode",
+    headerName: "Grade Code",
     type: "string",
-    width: 120,
+    width: 100,
     editable: false,
   },
   {
-    field: "category_name",
-    headerName: "Category",
+    field: "Level",
+    headerName: "Level",
     type: "string",
-    width: 120,
+    width: 70,
     editable: false,
   },
-
   {
-    field: "price",
-    headerName: "Price",
+    field: "Step",
+    headerName: "Step",
+    type: "string",
+    width: 70,
+    editable: false,
+  },
+  {
+    field: "Amount",
+    headerName: "Amount",
     type: "number",
     width: 100,
     editable: false,
   },
   {
-    field: "status",
-    headerName: "Status",
-    type: "string",
-    width: 100,
-    renderCell: (params) => (
-      <p className={params?.row?.status ? "text-green-500" : "text-red-500"}>
-        {params?.row?.status ? "Available" : "Not Available"}
-      </p>
-    ),
+    field: "Rent",
+    headerName: "Rent",
+    type: "number",
+    width: 70,
+    editable: false,
   },
-  // {
-  //   field: "createdAt",
-  //   headerName: "Created At",
-  //   type: "date",
-  //   width: 90,
-  //   editable: false,
-  //   // valueGetter: (params: any) => convertDate(params?.row?.createdAt, true),
+  {
+    field: "Transport",
+    headerName: "Transport",
+    type: "number",
+    width: 70,
+    editable: false,
+  },
 
-  //   renderCell: (params: any) => {
-  //     const date = convertDate(params?.row.createdAt, true);
-  //     return <p>{date}</p>;
-  //   },
-  // },
+  {
+    field: "CallDuty",
+    headerName: "Call Duty",
+    type: "number",
+    width: 70,
+    editable: false,
+  },
+  {
+    field: "Percular",
+    headerName: "Percular",
+    type: "number",
+    width: 70,
+    editable: false,
+  },
+  {
+    field: "Rural",
+    headerName: "Rural",
+    type: "number",
+    width: 70,
+    editable: false,
+  },
+  {
+    field: "links",
+    headerName: "Links",
+    type: "number",
+    width: 70,
+    editable: false,
+  },
 
-  // {
-  //   field: "fullName",
-  //   headerName: "Full name",
-  //   description: "This column has a value getter and is not sortable.",
-  //   sortable: false,
-  //   width: 160,
-  //   valueGetter: (params: GridValueGetterParams) =>
-  //     `${params.row.firstName || ""} ${params.row.lastName || ""}`,
-  // },
   {
     field: "details",
     headerName: "",
-    width: 80,
+    width: 70,
     sortable: false,
     renderCell: (params) => (
-      <Link href={`/maintenance/product/${params?.row?.id}`}>
+      <Link to={`/salary-configuration/${params?.row?.id}`}>
         <button className="bg-blue-400 text-white text-center text-xs p-2 capitalize rounded-xl hover:shadow-sm hover:scale-[105%] transition-all duration-200">
           details
         </button>
@@ -93,22 +103,16 @@ const columns: GridColDef[] = [
 ];
 
 interface TableType {
-  data: {
-    id: number;
-    name: string;
-    quantity?: number;
-    supplier_name?: string;
-    delivery_date?: Date;
-  }[];
+  data: SalaryScaleFullTypes[];
   isLoading: boolean;
 }
 
-const StockTable = ({ data, isLoading }: TableType) => {
+const SalaryScalesTable = ({ data, isLoading }: TableType) => {
   return (
     <div className="w-full">
       {data.length === 0 && !isLoading ? (
         <h3 className="text-xl text-error font-bold italic text-center">
-          No Product Found
+          No Data Available
         </h3>
       ) : isLoading ? (
         <div className="w-full flex flex-col items-center justify-center">
@@ -141,4 +145,4 @@ const StockTable = ({ data, isLoading }: TableType) => {
   );
 };
 
-export default StockTable;
+export default SalaryScalesTable;
