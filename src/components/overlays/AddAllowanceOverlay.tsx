@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import { PrimaryButton, TextInputWithLabel } from "..";
+import { LoadingComponent, PrimaryButton, TextInputWithLabel } from "..";
 
 import { GrClose } from "react-icons/gr";
 import { useGeneralStore } from "../../stores/general";
@@ -15,8 +15,9 @@ import { useParams } from "react-router-dom";
 import { BiTrendingUp } from "react-icons/bi";
 import { AUTOMATED_ALLOWANCES } from "../../constants";
 
-const AddAllowanceOverlay = ({ user_id }: { user_id?: string }) => {
+const AddAllowanceOverlay = () => {
   const [loading, setLoading] = useState(false);
+  const [adding, setAdding] = useState(false);
   const [amount, setAmount] = useState(0);
   const [allowance, setAllowance] = useState<TitleTypes | null>(null);
   const [allowances, setAllowances] = useState<TitleTypes[] | []>([]);
@@ -38,7 +39,7 @@ const AddAllowanceOverlay = ({ user_id }: { user_id?: string }) => {
   const submitForm = async (e: any) => {
     e.preventDefault();
     try {
-      setLoading(true);
+      setAdding(true);
 
       const response = await axiosInstance.post("/individualAllowances", {
         amount,
@@ -58,7 +59,7 @@ const AddAllowanceOverlay = ({ user_id }: { user_id?: string }) => {
       console.log(error);
       toast.error(error?.response?.data?.message);
     } finally {
-      setLoading(false);
+      setAdding(false);
     }
   };
 
@@ -106,7 +107,9 @@ const AddAllowanceOverlay = ({ user_id }: { user_id?: string }) => {
             </button>
           </div>
           {loading ? (
-            <div>Fetching Allowances</div>
+            <LoadingComponent loading={loading} message="Fetching Allowances" />
+          ) : adding ? (
+            <LoadingComponent loading={adding} message="Adding Allowance" />
           ) : (
             <form
               onSubmit={(e) => submitForm(e)}

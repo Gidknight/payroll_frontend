@@ -143,7 +143,7 @@ const StaffsTable = ({ data, isLoading }: TableType) => {
         <div className="w-full flex flex-col items-center justify-center">
           <BiLoaderCircle className="animate-spin" color="#05AC26" size={25} />
           <p className="text-base text-live font-semibold animate-pulse">
-            Fetching data...----
+            Fetching data...
           </p>
           {/* <Image
             src={"/images/headshot.jpg"}

@@ -22,11 +22,7 @@ const DashboardGraph = ({
   height = 500,
 }: LineGraphTypes) => {
   return (
-    <div className="holder-null">
-      <h2 className="font-bold text-2xl capitalize pb-3">
-        Monthly Grosspay Vs Netpay
-      </h2>
-
+    <div className="">
       <div className="w-full mx-auto overflow-x-auto">
         {data.length === 0 ? (
           <div>

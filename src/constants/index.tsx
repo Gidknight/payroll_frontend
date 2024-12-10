@@ -307,27 +307,27 @@ export const NAV_LINKS = [
       },
     ],
   },
-  {
-    id: 6,
-    title: "Payslip",
-    link: "/payslip",
-    icon: <MdReceiptLong />,
-    hasSub: true,
-    subMenu: [
-      {
-        id: 61,
-        title: "Send Payslip",
-        link: "/payslip/send-payslip",
-        icon: <MdEmail />,
-      },
-      {
-        id: 62,
-        title: "Statistics",
-        link: "/payslip/statistics",
-        icon: <BiTable />,
-      },
-    ],
-  },
+  // {
+  //   id: 6,
+  //   title: "Payslip",
+  //   link: "/payslip",
+  //   icon: <MdReceiptLong />,
+  //   hasSub: true,
+  //   subMenu: [
+  //     {
+  //       id: 61,
+  //       title: "Send Payslip",
+  //       link: "/payslip/send-payslip",
+  //       icon: <MdEmail />,
+  //     },
+  //     {
+  //       id: 62,
+  //       title: "Statistics",
+  //       link: "/payslip/statistics",
+  //       icon: <BiTable />,
+  //     },
+  //   ],
+  // },
   {
     id: 7,
     title: "Administration",

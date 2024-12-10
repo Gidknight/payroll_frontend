@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import { PrimaryButton, TextInputWithLabel } from "..";
+import { LoadingComponent, PrimaryButton, TextInputWithLabel } from "..";
 
 import { GrClose } from "react-icons/gr";
 import { useGeneralStore } from "../../stores/general";
@@ -16,10 +16,11 @@ import { useParams } from "react-router-dom";
 import { BiTrendingDown } from "react-icons/bi";
 import { AUTOMATED_DEDUCTIONS } from "../../constants";
 
-const AddDeductionOverlay = ({ user_id }: { user_id?: string }) => {
+const AddDeductionOverlay = () => {
   const params = useParams();
   const staff_id = params.id;
   const [loading, setLoading] = useState(false);
+  const [adding, setAdding] = useState(false);
   const [amount, setAmount] = useState(0);
   const [deduction, setDeduction] = useState<TitleTypes | null>(null);
   const [deductions, setDeductions] = useState<TitleTypes[] | []>([]);
@@ -39,7 +40,7 @@ const AddDeductionOverlay = ({ user_id }: { user_id?: string }) => {
   const submitForm = async (e: any) => {
     e.preventDefault();
     try {
-      setLoading(true);
+      setAdding(true);
 
       const response = await axiosInstance.post("/individualDeductions", {
         amount,
@@ -59,7 +60,7 @@ const AddDeductionOverlay = ({ user_id }: { user_id?: string }) => {
       console.log(error);
       toast.error(error?.response?.data?.message);
     } finally {
-      setLoading(false);
+      setAdding(false);
     }
   };
 
@@ -107,7 +108,9 @@ const AddDeductionOverlay = ({ user_id }: { user_id?: string }) => {
             </button>
           </div>
           {loading ? (
-            <div>Fetching Deductions</div>
+            <LoadingComponent loading={adding} message="Fetching Deductions" />
+          ) : adding ? (
+            <LoadingComponent loading={adding} message="Adding Deduction" />
           ) : (
             <form
               onSubmit={(e) => submitForm(e)}

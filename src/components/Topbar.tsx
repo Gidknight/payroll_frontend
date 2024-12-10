@@ -13,6 +13,7 @@ const Topbar = () => {
   const navigate = useNavigate();
   const userAuth = useAuthStore((state) => state.userAuth);
   const [isLoading, setIsLoading] = useState(false);
+  const [current, setCurrent] = useState("");
 
   const [staffNumber, setStaffNumber] = useState("");
   const [name, setName] = useState("");
@@ -68,7 +69,19 @@ const Topbar = () => {
       setIsLoading(false);
     }
   };
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axiosInstance.get("/datedOn/current");
+        if (response.status == 200) {
+          setCurrent(`${response?.data?.Month} ${response?.data?.Year}`);
+        }
+      } catch (error: any) {
+        console.log(error?.response?.data?.message);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <div className="w-full flex flex-row items-center justify-between bg-slate-400 bg-opacity-50 py-3 px-20 shadow-md sticky top-0">
@@ -76,6 +89,11 @@ const Topbar = () => {
         <span className="text-sm font-normal capitalize">Hello again, </span>
         {userAuth?.username}
       </h1>
+
+      <div className="flex flex-row items-center justify-center gap-2">
+        <p className="text-nowrap">Working Month:</p>
+        <h2 className="text-nowrap text-lg font-bold">{current}</h2>
+      </div>
       <div className="w-full flex flex-row items-center justify-end bg- gap-5">
         {/* <Link
           to="/sales/make-sale"
