@@ -7,6 +7,7 @@ import {
   Image,
   View,
 } from "@react-pdf/renderer";
+import { OrganizationTypes, PayslipReportTypes } from "../../types";
 
 const now = moment().format("DD-MM-yyyy");
 
@@ -144,7 +145,15 @@ const styles = StyleSheet.create({
   },
 });
 
-const MyDocument = ({ staff, institute, forMail = true }) => {
+const PayslipDocument = ({
+  staff,
+  institute,
+  forMail = true,
+}: {
+  staff: PayslipReportTypes;
+  institute: OrganizationTypes;
+  forMail?: boolean;
+}) => {
   return (
     <Document>
       <Page size={"A4"} style={styles.page}>
@@ -182,11 +191,11 @@ const MyDocument = ({ staff, institute, forMail = true }) => {
             </Text>
             <Text style={styles.biodata}>
               Pension Account Details:{" "}
-              <Text> {staff?.account?.pension_acct_name}</Text> |{" "}
+              <Text> {staff?.account?.pension_acct_id}</Text> |{" "}
               <Text> {staff?.account?.pension_acct_no}</Text>
             </Text>
             <Text style={styles.biodata}>
-              Department: <Text> {staff?.jobs?.sub_unit?.Name}</Text>
+              Department: <Text> {staff?.jobs?.sub_unit?.name}</Text>
             </Text>
 
             {/* new update */}
@@ -217,34 +226,31 @@ const MyDocument = ({ staff, institute, forMail = true }) => {
             <Text style={styles.topic}>Earning Summary</Text>
             <View style={styles.allowance}>
               <Text>BASIC SALARY</Text>
-              <Text>
-                NGN {parseFloat(staff?.jobs?.amount)?.toLocaleString("en-US")}
-              </Text>
+              <Text>NGN {staff?.jobs?.amount?.toLocaleString("en-US")}</Text>
             </View>
             {staff?.allowances &&
               staff.allowances.map((allow, index) => (
                 <View style={styles.allowance} key={index}>
-                  <Text>{allow?.AllowanceNames?.Name} </Text>
+                  <Text>{allow?.Name} </Text>
                   <Text>NGN {allow?.Amount?.toLocaleString("en-US")} </Text>
                 </View>
               ))}
             <View style={styles.allowance}>
               <Text>Total Allowance:</Text>
               <Text style={{ color: "green" }}>
-                NGN{" "}
-                {parseFloat(staff?.total_allowance)?.toLocaleString("en-US")}
+                NGN {staff?.total_allowance?.toLocaleString("en-US")}
               </Text>
             </View>
             <View style={styles.allowance}>
               <Text>Gross Pay:</Text>
               <Text style={{ color: "blue" }}>
-                NGN {parseFloat(staff?.gross_pay)?.toLocaleString("en-US")}
+                NGN {staff?.gross_pay?.toLocaleString("en-US")}
               </Text>
             </View>
             <View style={styles.allowance}>
               <Text>Net Pay:</Text>
               <Text style={{ color: "blue" }}>
-                NGN {parseFloat(staff?.net_pay)?.toLocaleString("en-US")}
+                NGN {staff?.net_pay?.toLocaleString("en-US")}
               </Text>
             </View>
           </View>
@@ -254,7 +260,7 @@ const MyDocument = ({ staff, institute, forMail = true }) => {
             {staff?.deductions &&
               staff.deductions.map((deduct, index) => (
                 <View style={styles.deduction} key={index}>
-                  <Text>{deduct?.DeductionNames?.Name} </Text>
+                  <Text>{deduct?.Name} </Text>
                   <Text>NGN {deduct?.Amount?.toLocaleString("en-US")}</Text>
                 </View>
               ))}
@@ -279,4 +285,4 @@ const MyDocument = ({ staff, institute, forMail = true }) => {
   );
 };
 
-export default MyDocument;
+export default PayslipDocument;

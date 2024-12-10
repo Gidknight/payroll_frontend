@@ -168,16 +168,18 @@ export interface ReportType {
   net_pay: number;
 }
 
+export interface OrganizationTypes {
+  OrganisationName: string;
+  OrganisationAddress: string;
+  OtherInfo1?: string;
+  OtherInfo2?: string;
+}
+
 export interface ReportColumnsTypes {}
 export interface MasterReportTypes {
   title: string;
   date: { Month: string; Year: Number };
-  organization: {
-    OrganisationName: string;
-    OrganisationAddress: string;
-    OtherInfo1?: string;
-    OtherInfo2?: string;
-  };
+  organization: OrganizationTypes;
   summations: {
     total_allowance: number;
     total_deduction: number;
@@ -192,15 +194,54 @@ export interface MasterReportTypes {
   columns: string[];
 }
 
+export interface PayslipReportTypes {
+  id: number;
+  surname: string;
+  firstname: string;
+  other_name: string;
+  staff_no: string;
+  email_address: string;
+  //  account_number:string;
+  month: string;
+  //  amount:number;
+  year: number;
+  account: {
+    bank_name_id: number;
+    bank_name: string;
+    account_number: string;
+    pension_acct_id: number;
+    pension_acct_no: string | null;
+  };
+  jobs: {
+    amount: number;
+    payable_month: number;
+    total_month: number;
+    salary_scale: {
+      name: string;
+      level: string;
+      step: string;
+      grade_code: string;
+    };
+    sub_unit: {
+      id: number;
+      name: string;
+      unit_name: string;
+      unit_id: number;
+    };
+  };
+  allowances: { id: number; Amount: number; Name: string }[];
+  deductions: { id: number; Amount: number; Name: string }[];
+  total_allowance: number;
+  total_deduction: number;
+  payable_amount: number;
+  gross_pay: number;
+  net_pay: number;
+}
+
 export interface HistoryLogTypes {
   title: string;
   date: { Month: string; Year: Number };
-  organization: {
-    OrganisationName: string;
-    OrganisationAddress: string;
-    OtherInfo1?: string;
-    OtherInfo2?: string;
-  };
+  organization: OrganizationTypes;
   records: [][];
   // records: { id: number; staff: string; action: string; createdAt: string }[];
   columns: string[];

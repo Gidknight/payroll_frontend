@@ -3,14 +3,17 @@ import { useState, useRef, useEffect } from "react";
 import { MdReceiptLong } from "react-icons/md";
 import { PiPrinter } from "react-icons/pi";
 import { useReactToPrint } from "react-to-print";
-
-interface PayslipReportTypes {}
+import { OrganizationTypes, PayslipReportTypes } from "../../types";
+import PayslipDocument from "./PayslipDocument";
+import PayslipDocumentHTML from "./PayslipDocumentHTML";
 
 const PayslipsReport = ({
   data,
   isLoading,
+  institute,
 }: {
-  data: PayslipReportTypes;
+  institute: OrganizationTypes;
+  data: PayslipReportTypes[];
   isLoading: boolean;
 }) => {
   const [isPrinting, setIsPrinting] = useState(false);
@@ -19,9 +22,10 @@ const PayslipsReport = ({
   const promiseResolveRef = useRef<any>(null);
   const componentRef = useRef<any>(null);
   const handlePrint = useReactToPrint({
-    documentTitle: "Custormer Sale Record",
-    content: () => componentRef.current,
-    onBeforeGetContent: () => {
+    documentTitle: "Payslip Report",
+
+    contentRef: componentRef,
+    onBeforePrint: () => {
       return new Promise((resolve) => {
         promiseResolveRef.current = resolve;
         setIsPrinting(true);
@@ -45,7 +49,7 @@ const PayslipsReport = ({
   // const { day_in_word, year, month_in_word } = date;
 
   return (
-    <div className="holder-active">
+    <div className="holder-active h-full">
       <div className="flex flex-row items-center justify-between min-w-full">
         <div className="side-by-side pl-5">
           <span className="text-[30px]">{<MdReceiptLong />}</span>
@@ -76,6 +80,15 @@ const PayslipsReport = ({
           ref={componentRef}
           className=" w-full flex flex-col items-center justify-center gap-2 p-5"
         >
+          {data.map((staff) => (
+            <PayslipDocumentHTML
+              institute={institute}
+              staff={staff}
+              forMail={false}
+              key={staff.id}
+            />
+          ))}
+
           {/* COMPANY INFO */}
           {/* <div className="mx-auto flex flex-col items-center justify-center w-full p-2 border-y-2 border-dashed">
             <h1 className="font-extrabold text-xl uppercase text-primary">
